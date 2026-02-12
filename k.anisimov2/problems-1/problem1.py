@@ -1,4 +1,4 @@
-def cumulative_sums(arr):
+def cumulative_sum(arr):
     res = [0]
     s = 0
     for x in arr:
