@@ -1,21 +1,20 @@
 def collatz_seq(number, maxIter = 1 << 61):
-    def inner_func(n, iteration, num_seq):
-        if iteration == maxIter:
-            return False
-
-        num_seq.append(n)
-        if n == 1:
-            return True
+    seq = [number]
+    n = number
+    i = 0
+    while n != 1:
+        if i == maxIter:
+            return False, []
 
         if n % 2 == 0:
-            return inner_func(n // 2, iteration + 1, num_seq)
+            n = n // 2
         else:
-            return inner_func(3 * n + 1, iteration + 1, num_seq)
+            n = 3 * n + 1
 
-    seq = []
-    res = inner_func(number, 0, seq)
+        i += 1
+        seq.append(n)
 
-    return (res, seq) if res else (res, [])
+    return True, seq
 
 
 assert collatz_seq(3) == (True, [3, 10, 5, 16, 8, 4, 2, 1])
