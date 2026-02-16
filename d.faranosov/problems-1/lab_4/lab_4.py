@@ -7,4 +7,6 @@ def write_poem():
         print("And if one green bottle should accidentally fall,")
         print(f"There`ll be {num_dict[i-1].lower()} green bottles hanging on the wall.")
 
-write_poem()
+
+if __name__ == '__main__':
+    write_poem()
