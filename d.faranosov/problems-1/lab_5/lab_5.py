@@ -14,18 +14,20 @@ def get_simple(number: int):
         res.append([int(number), 1])
     return res
 
-if len(argv) < 2:
-    print(f'No numbers to work with', file=stderr)
-    exit(1)
 
-
-
-for i, arg in enumerate(argv[1:]):
-    try:
-        number = int(arg)
-        res_list = get_simple(number)
-        print(f'{arg} -> {res_list}\n')
-    except ValueError:
-        print(f'i = {i} number is not an integer or number at all = {arg}', file=stderr)
+if __name__ == '__main__':
+    if len(argv) < 2:
+        print(f'No numbers to work with', file=stderr)
         exit(1)
+
+
+
+    for i, arg in enumerate(argv[1:]):
+        try:
+            number = int(arg)
+            res_list = get_simple(number)
+            print(f'{arg} -> {res_list}\n')
+        except ValueError:
+            print(f'i = {i} number is not an integer or number at all = {arg}', file=stderr)
+            exit(1)
 
