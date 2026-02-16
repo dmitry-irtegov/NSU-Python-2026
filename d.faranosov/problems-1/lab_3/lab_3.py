@@ -14,7 +14,15 @@ def hyp(num):
         print(f'{temp}->', end="")
     print(f'{nums[-1]}')
 
-if len(argv) < 2:
-    print("No num to check", file=stderr)
-num = int(argv[1])
-hyp(num)
+
+if __name__ == '__main__':
+
+    if len(argv) < 2:
+        print("No num to check", file=stderr)
+        exit(1)
+
+    try:
+        hyp(int(argv[1]))
+    except ValueError:
+        print("Invalid number", file=stderr)
+        exit(1)
