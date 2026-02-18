@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 def to_prime(n: int) -> list:
     if n == 0: return []
 
@@ -24,4 +26,9 @@ def to_prime(n: int) -> list:
 
     return out
 
-print(to_prime(int(input())))
+if __name__ == "__main__":
+    num = 12
+    assert to_prime(num) == [[2, 2], [3, 1]]
+
+    num = 60
+    assert to_prime(num) == [[2, 2], [3, 1], [5, 1]]
