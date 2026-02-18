@@ -1,3 +1,4 @@
+#!/usr/bin/python
 nums = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
 n = 10
 while n != 0:
