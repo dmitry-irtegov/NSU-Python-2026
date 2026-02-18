@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 inp = int(input())
 
 while inp > 1:
