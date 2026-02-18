@@ -1,3 +1,4 @@
+#!/usr/bin/python
 def compute(inp: list) -> list:
     out = [0]
     for i in inp:
