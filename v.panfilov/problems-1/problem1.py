@@ -4,7 +4,7 @@ import sys
 from typing import List
 
 
-def cumulative_sums(numbers: List):
+def cumulative_sums(numbers):
         
     result = [0]
     currentSum = 0
