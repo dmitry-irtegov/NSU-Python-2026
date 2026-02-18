@@ -2,11 +2,19 @@
 def limit(inp: list, a: int, b: int) -> list:
     return list(map(lambda x: a if x < a else (b if x > b else x), inp))
 
-if __name__ == "__main__":
-    inp = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    a, b = 3, 7
-    assert limit(inp, a, b) == [3, 3, 3, 4, 5, 6, 7, 7, 7]
+def test():
+    from random import randint
 
-    inp = [6, 5, 2, 7, -1, 5, 2, 10]
-    a, b = 3, 9
-    assert limit(inp, a, b) == [6, 5, 3, 7, 3, 5, 3, 9]
+    def test_case():
+        arr = [randint(-100, 100) for i in range(100)]
+        ab = sorted([randint(-100, 100), randint(-100, 100)])
+
+        new_arr = sorted(limit(arr, ab[0], ab[1]))
+
+        assert (new_arr[0] >= ab[0]) and (new_arr[-1] <= ab[1])
+
+    for i in range(100):
+        test_case()
+
+if __name__ == "__main__":
+    test()
