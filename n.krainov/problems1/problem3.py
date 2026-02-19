@@ -16,5 +16,24 @@ def collatz_seq(number, maxIter = 1 << 61):
 
     return True, seq
 
+original_print = print
+def print(*args, **kwargs):
+    new_args = []
+    for arg in args:
+        if isinstance(arg, tuple) and len(arg) == 2:
+            first, second = arg
+            if isinstance(first, bool) and isinstance(second, list):
+                new_args.append(str(first) + " " + ' -> '.join(str(x) for x in second))
+            else:
+                new_args.append(arg)
+        else:
+            new_args.append(arg)
+    original_print(*new_args, **kwargs)
+
+
 
 assert collatz_seq(3) == (True, [3, 10, 5, 16, 8, 4, 2, 1])
+
+if __name__ == '__main__':
+
+    print(collatz_seq(3))
