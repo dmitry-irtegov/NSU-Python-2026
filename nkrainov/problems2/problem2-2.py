@@ -23,7 +23,9 @@ def build_dictionary(input_dict):
 if __name__ == "__main__":
     path = input("please enter the file path: ")
     try:
-        lines = open(path, "r").readlines()
+        with open(path, "r") as file:
+            lines = file.readlines()
+
     except Exception as e:
         print("error occurred during opening file", e)
         exit(1)
