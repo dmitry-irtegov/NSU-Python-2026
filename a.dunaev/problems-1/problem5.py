@@ -2,7 +2,6 @@
 
 def to_prime(n: int) -> list:
     if n == 0: return []
-
     out = []
     num = n
     prime = [True] * (num + 1)
