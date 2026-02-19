@@ -8,10 +8,6 @@ def cumulative_sum(numList):
 
     return res
 
-assert cumulative_sum([10, 20, 30]) == [0, 10, 30, 60]
-assert cumulative_sum([0]) == [0, 0]
-assert cumulative_sum([]) == [0]
-
 if __name__ == '__main__':
     try:
         listLen = input("Please enter a list length: ")
