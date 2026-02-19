@@ -24,7 +24,9 @@ def test():
     def test_case():
         num = randint(1, 100)
         program(num)
-        assert buffer[-2] == "1"
+        res = buffer.split('\n')[-2].split(' -> ')
+        assert res[0] == str(num) and res[-1] == "1"
+
 
     for i in range(100):
         test_case()
