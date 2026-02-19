@@ -35,5 +35,10 @@ def print(*args, **kwargs):
 assert collatz_seq(3) == (True, [3, 10, 5, 16, 8, 4, 2, 1])
 
 if __name__ == '__main__':
+    num = input("Enter a number: ")
 
-    print(collatz_seq(3))
+    if num.isdigit():
+        num = int(num)
+        print(collatz_seq(num))
+    else:
+        print("it isn't a number")
