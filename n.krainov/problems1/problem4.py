@@ -20,4 +20,5 @@ def print_ten_green_bottles():
 
     print(''.join(parts))
 
-print_ten_green_bottles()
+if __name__ == '__main__':
+    print_ten_green_bottles()
