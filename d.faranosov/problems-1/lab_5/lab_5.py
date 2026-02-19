@@ -17,7 +17,7 @@ def get_simple(number: int):
 
 if __name__ == '__main__':
     if len(argv) < 2:
-        print(f'No numbers to work with', file=stderr)
+        print('No numbers to work with', file=stderr)
         exit(1)
 
 
