@@ -8,7 +8,7 @@ def build_dictionary(input_dict):
             raise ValueError("incorrect format of line")
 
         for word in words[1:]:
-            if not word in latin_to_english:
+            if word not in latin_to_english:
                 latin_to_english[word] = list()
 
             latin_to_english[word].append(words[0])
