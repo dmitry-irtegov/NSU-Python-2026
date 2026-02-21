@@ -1,15 +1,29 @@
-nums = list(map(int, input("Введите числа через пробел: ").split()))
+import unittest
 
 def cumulative_sums(seq):
     result = [0]
     total = 0
-
     for x in seq:
         total += x
         result.append(total)
-
     return result
 
-result = cumulative_sums(nums)
 
-print(result)
+class TestCumulativeSums(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertEqual(cumulative_sums([]), [0])
+
+    def test_positive_numbers(self):
+        self.assertEqual(cumulative_sums([1, 2, 3]), [0, 1, 3, 6])
+
+    def test_negative_numbers(self):
+        self.assertEqual(cumulative_sums([-1, -2, -3]), [0, -1, -3, -6])
+
+    def test_mixed_numbers(self):
+        self.assertEqual(cumulative_sums([1, -1, 2]), [0, 1, 0, 2])
+
+    def test_single_element(self):
+        self.assertEqual(cumulative_sums([5]), [0, 5])
+
+if __name__ == "__main__":
+    unittest.main()
