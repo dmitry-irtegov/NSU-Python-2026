@@ -1,5 +1,9 @@
-def collatz(number: int) -> list[int]:
+import sys
+
+
+def collatz(number):
     if number <= 0:
+        print(f"Invalid number for Collatz: {number}. Expected a positive integer.", file=sys.stderr)
         return []
 
     res = [number]
@@ -12,17 +16,25 @@ def collatz(number: int) -> list[int]:
     return res
 
 
-def main() -> None:
+def main():
     try:
-        number = int(input())
-    except ValueError:
+        raw = input()
+        number = int(raw)
+    except KeyboardInterrupt:
+        print("Interrupted by user.", file=sys.stderr)
         return
+    except Exception as e:
+        print(f"Input error: {e}", file=sys.stderr)
+        return
+
     arr = collatz(number)
-    if arr:
-        print(arr[0], end="")
-        for x in arr[1:]:
-            print(" ->", x, end="")
-        print()
+    if not arr:
+        return
+
+    print(arr[0], end="")
+    for x in arr[1:]:
+        print(" ->", x, end="")
+    print()
 
 
 if __name__ == "__main__":
