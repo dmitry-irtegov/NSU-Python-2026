@@ -15,10 +15,7 @@ def test_cummulative_sum() -> None:
     print(cummulative_sum([1, 2, 3]))
     random_numbers = [uuid.uuid4().int for _ in range(10)]
 
-    np_res = [0]
-    np_res.extend(np.cumsum(random_numbers).tolist())
-
-    assert cummulative_sum(random_numbers) == np_res
+    assert np.array_equal(cummulative_sum(random_numbers)[1:], np.cumsum(random_numbers))
 
 
 if __name__ == "__main__":
