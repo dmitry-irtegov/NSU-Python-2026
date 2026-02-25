@@ -1,6 +1,6 @@
 import unittest
 from lab_2 import convert_dict_from_file, get_dict_from_file, convert_dict
-import dict_generator
+from dict_generator import generate
 
 
 class MyTestCase(unittest.TestCase):
@@ -16,6 +16,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual(converted_dict, ans)
 
     def test_hard(self):
+        generate()
         file_dict = get_dict_from_file("hard.txt")
         converted_dict = convert_dict(file_dict)
         last_word = ""
