@@ -39,14 +39,25 @@ class TestСollatz(unittest.TestCase):
 
 if __name__ == '__main__':
     """Основная функция программы."""
-    try:
-        user_input = input("Введите натуральное число: ")
-        n = int(user_input)
-        sequence = collatz_sequence(n)
-        print(" → ".join(map(str, sequence)))
-    except ValueError as e:
-        print(f"Ошибка: {e}")
-
+    while True:
+        try:
+            user_input = input("Введите натуральное число: ")
+            n = int(user_input)
+            sequence = collatz_sequence(n)
+            print(" → ".join(map(str, sequence)))
+            break
+        except ValueError as e:
+            print(f"Ошибка: {e}")
+        except KeyboardInterrupt:
+            print("KeyboardInterrupt received")
+            exit()
+        except EOFError:
+            print("EOFError received")
+            exit()
+        except Exception as e:
+            print(f"Ошибка:\n {e}")
+            exit()
+    print("Тесты:")
     unittest.main()
 
 
