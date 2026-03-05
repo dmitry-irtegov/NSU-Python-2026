@@ -1,6 +1,6 @@
 from sys import argv, stderr
 
-def hyp(num):
+def hyp(num: int):
     if (num < 1):
         raise ValueError
     nums = [num]
