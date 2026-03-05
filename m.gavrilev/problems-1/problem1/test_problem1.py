@@ -1,4 +1,3 @@
-# test_cumulative_sum_properties.py
 import random
 import unittest
 
@@ -35,6 +34,30 @@ class TestCumulativeSumProperties(unittest.TestCase):
 
             # последняя сумма равна сумме входа
             self.assertEqual(out[-1], sum(xs))
+
+    def test_random_floats_properties(self):
+        rng = random.Random(98765432101)
+
+        for _ in range(500):
+            n = rng.randint(0, 200)
+            xs = [rng.uniform(-1_000_000, 1_000_000) for _ in range(n)]
+            xs_copy = xs.copy()
+
+            out = cumulative_sum(xs)
+
+            # функция не изменила подаваемый в нее лист
+            self.assertEqual(xs, xs_copy)
+
+            # длина и первый элемент
+            self.assertEqual(len(out), len(xs) + 1)
+            self.assertEqual(out[0], 0)
+
+            # разности дают исходную последовательность
+            for i, x in enumerate(xs):
+                self.assertAlmostEqual(out[i + 1] - out[i], x)
+
+            # последняя сумма равна сумме входа
+            self.assertAlmostEqual(out[-1], sum(xs))
 
 
 if __name__ == "__main__":
