@@ -47,7 +47,7 @@ There`ll be two green bottles hanging on the wall.
 Two green bottles hanging on the wall,
 Two green bottles hanging on the wall,
 And if one green bottle should accidentally fall,
-There`ll be one green bottles hanging on the wall.
+There`ll be one green bottle hanging on the wall.
 One green bottle hanging on the wall,
 One green bottle hanging on the wall,
 And if one green bottle should accidentally fall,
