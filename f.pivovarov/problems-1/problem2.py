@@ -1,5 +1,6 @@
 from random import randint, random
 import unittest
+import numpy as np
 
 def cut(numbers, a, b):
     return [a if x < a else b if x > b else x for x in numbers]
@@ -24,11 +25,12 @@ class TestCut(unittest.TestCase):
         self.assertTrue(len(arr) == len(cut(arr, a, b)))
 
     def get_a_b_arr(self):
-        size = randint(1, 1000)
-        a = random()
-        b = random()
+        np.random.seed(42)
+        size = np.random.randint(1, 1000)
+        a = np.random.rand()
+        b = np.random.rand()
         a, b = min(a, b), max(a, b)
-        arr = [random() for i in range(size)]
+        arr = [np.random.rand() for i in range(size)]
 
         return a, b, arr
 
