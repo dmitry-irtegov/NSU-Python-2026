@@ -3,18 +3,14 @@ from sys import argv, stderr
 def hyp(num: int):
     if (num < 1):
         raise ValueError
-    nums = [num]
+
     while num != 1:
+        print(f'{num}->', end="")
         if num % 2 == 0:
             num //= 2
-            nums.append(num)
         else:
             num = num * 3 +1
-            nums.append(num)
-
-    for temp in nums[:-1]:
-        print(f'{temp}->', end="")
-    print(f'{nums[-1]}')
+    print(f'1')
 
 
 if __name__ == '__main__':
