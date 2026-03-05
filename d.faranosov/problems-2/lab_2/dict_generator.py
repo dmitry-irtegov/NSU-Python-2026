@@ -1,5 +1,4 @@
 from random import randint, choice, seed
-from time import time
 from string import ascii_lowercase
 from sys import stderr
 
