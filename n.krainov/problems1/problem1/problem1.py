@@ -9,6 +9,8 @@ def cumulative_sum(numList):
     return res
 
 if __name__ == '__main__':
+    import sys
+
     try:
         listLen = input("Please enter a list length: ")
         listNums = []
@@ -16,7 +18,7 @@ if __name__ == '__main__':
         listLen = int(listLen)
 
         if listLen < 0:
-            print("List can't have negative length")
+            sys.stderr.write("List can't have negative length")
             exit(1)
 
         if listLen != 0:
@@ -28,5 +30,5 @@ if __name__ == '__main__':
 
         print(cumulative_sum(listNums))
     except Exception as e:
-        print("error occurred: " + str(e))
+        sys.stderr.write("error occurred: " + str(e))
         exit(1)
