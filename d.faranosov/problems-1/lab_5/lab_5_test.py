@@ -1,6 +1,8 @@
 import unittest
 from lab_5 import get_simple
 from functools import reduce
+from random import randint, seed
+
 class MyTestCase(unittest.TestCase):
     def test_simple(self):
         cases = [
@@ -35,6 +37,17 @@ class MyTestCase(unittest.TestCase):
     def test_large_power_of_two(self):
         result = get_simple(2 ** 20)
         self.assertEqual(result, [[2, 20]])
+
+    def test_random(self):
+        seed(1)
+        for _ in range(100):
+            num = randint(10**4, 10**6)
+            ans = get_simple(num)
+            summ = 1
+            for pair in ans:
+                summ *= pair[0] ** pair[1]
+            self.assertEqual(num, summ)
+
 
 
 if __name__ == '__main__':
