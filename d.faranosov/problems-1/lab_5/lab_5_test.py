@@ -18,12 +18,25 @@ class MyTestCase(unittest.TestCase):
             self.assertEqual(num, reduce(lambda acc, x: acc * (x[0] ** x[1]), res, 1))
 
 
-    def test_hard(self):
-        random.seed(time.time())
-        for num in range(1, 10):
-            num = random.randint(10**5, 10**7)
-            res = get_simple(num)
-            self.assertEqual(num, reduce(lambda acc, x: acc * (x[0] ** x[1]), res, 1))
+    def test_negative_numbers(self):
+        self.assertEqual(get_simple(-4), [[2, 2]])
+        self.assertEqual(get_simple(-6), [[2, 1], [3, 1]])
+        self.assertEqual(get_simple(-12), [[2, 2], [3, 1]])
+
+    def test_number_one(self):
+        self.assertEqual(get_simple(1), [])
+
+    def test_zero(self):
+        self.assertEqual(get_simple(0), [])
+
+    def test_large_prime(self):
+        large_prime = 999983
+        result = get_simple(large_prime)
+        self.assertEqual(result, [[large_prime, 1]])
+
+    def test_large_power_of_two(self):
+        result = get_simple(2 ** 20)
+        self.assertEqual(result, [[2, 20]])
 
 
 if __name__ == '__main__':

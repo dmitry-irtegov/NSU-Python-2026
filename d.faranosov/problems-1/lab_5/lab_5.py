@@ -3,7 +3,7 @@ from sys import argv, stderr
 def get_simple(number: int):
     number = abs(number)
     res = []
-    for pretendent in range(2, number//2):
+    for pretendent in range(2, number//2 + 1):
         if number % pretendent == 0:
             counter = 0
             while number % pretendent == 0:
