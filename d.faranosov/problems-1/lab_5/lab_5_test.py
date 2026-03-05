@@ -1,5 +1,3 @@
-import random
-import time
 import unittest
 from lab_5 import get_simple
 from functools import reduce
