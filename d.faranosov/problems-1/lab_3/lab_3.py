@@ -2,7 +2,7 @@ from sys import argv, stderr
 
 def hyp(num: int):
     if (num < 1):
-        raise ValueError
+        raise ValueError(f"trying to check hypotheses with num < 1 ({num})")
 
     while num != 1:
         print(f'{num}->', end="")
@@ -21,6 +21,6 @@ if __name__ == '__main__':
 
     try:
         hyp(int(argv[1]))
-    except ValueError:
-        print("Invalid number", file=stderr)
+    except ValueError as e:
+        print(f"Invalid number: {e}", file=stderr)
         exit(1)
