@@ -21,12 +21,12 @@ class Table:
     def head(self, cnt:int=1):
         if cnt > len(self.table) or cnt < 0:
             raise ValueError("Cnt lines to return more than lines in table")
-        return Table([self.table[l] for l in range(cnt)])
+        return Table([self.table[line] for line in range(cnt)])
 
     def tail(self, cnt:int=1):
         if cnt > len(self.table) or cnt < 0:
             raise ValueError("Cnt lines to return more than lines in table")
-        return Table([self.table[l] for l in range(len(self.table) - cnt, len(self.table))])
+        return Table([self.table[line] for line in range(len(self.table) - cnt, len(self.table))])
 
     def get_lines(self, lines_numbers: List[int]):
         res = []

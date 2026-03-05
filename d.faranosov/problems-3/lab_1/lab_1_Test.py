@@ -70,15 +70,15 @@ class MyTestCase(unittest.TestCase):
     def test_get_lines_failed(self):
         with self.assertRaisesRegex(ValueError, "line out of index"):
             table = create_table()
-            l = [number for number in range(1, len(table.table), 2)]
-            l[2] = -1
-            table.get_lines(l)
+            lines = [number for number in range(1, len(table.table), 2)]
+            lines[2] = -1
+            table.get_lines(lines)
 
         with self.assertRaisesRegex(ValueError, "line out of index"):
             table = create_table()
-            l = [number for number in range(1, len(table.table), 2)]
-            l[4] = 13
-            table.get_lines(l)
+            lines = [number for number in range(1, len(table.table), 2)]
+            lines[4] = 13
+            table.get_lines(lines)
 
     def test_row_selecting(self):
         table = create_table()
