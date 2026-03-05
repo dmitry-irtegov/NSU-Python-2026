@@ -1,4 +1,5 @@
 import random
+import time
 import unittest
 from lab_5 import get_simple
 from functools import reduce
@@ -18,6 +19,7 @@ class MyTestCase(unittest.TestCase):
 
 
     def test_hard(self):
+        random.seed(time.time())
         for num in range(1, 10):
             num = random.randint(10**5, 10**7)
             res = get_simple(num)
