@@ -10,7 +10,7 @@ def hyp(num: int):
             num //= 2
         else:
             num = num * 3 +1
-    print(f'1')
+    print('1')
 
 
 if __name__ == '__main__':
