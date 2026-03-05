@@ -144,7 +144,7 @@ class MyTestCase(unittest.TestCase):
         self.assertFalse(v == [1, 2, 3])
         self.assertFalse(v == "vector")
         self.assertFalse(v == 42)
-        self.assertFalse(v == None)
+        self.assertFalse(v is None)
 
     def test_reflexive(self):
         v = Vector([1, 2, 3])
