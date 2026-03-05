@@ -13,7 +13,7 @@ def generate():
         "tempus", "dies", "nox", "hora", "annus", "mensis", "septimana"
     ]
 
-    seed(time())
+    seed(1)
 
     cnt = 0
     letters = ascii_lowercase
