@@ -2,7 +2,6 @@
 import unittest
 from unittest.mock import patch
 import io
-import sys
 
 song = """Ten green bottles hanging on the wall,
 Ten green bottles hanging on the wall,
