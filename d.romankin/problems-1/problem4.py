@@ -11,7 +11,7 @@ def green_bottles():
         for _ in range(2):
             print(numbers[i] + " " + "green bottle" + ("" if i == length - 2 else "s") + " hanging on the wall,")
         print(("And if " if i != length - 2 else "If that ") + "one green bottle should accidentally fall,")
-        print("There’ll be " + numbers[i + 1].lower() + " green bottles hanging on the wall.")
+        print("There’ll be " + numbers[i + 1].lower() + " green bottle" +("" if i == length - 3 else "s") + " hanging on the wall.")
 
 
 
@@ -54,7 +54,7 @@ There’ll be two green bottles hanging on the wall.
 Two green bottles hanging on the wall,
 Two green bottles hanging on the wall,
 And if one green bottle should accidentally fall,
-There’ll be one green bottles hanging on the wall.
+There’ll be one green bottle hanging on the wall.
 One green bottle hanging on the wall,
 One green bottle hanging on the wall,
 If that one green bottle should accidentally fall,
