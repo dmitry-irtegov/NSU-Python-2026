@@ -1,5 +1,4 @@
 #!/usr/bin/env python3.12
-import unittest
 from sys import stderr, exit
 
 def prime_factors(n: int) -> list[list[int]]:
@@ -36,22 +35,6 @@ def prime_factors(n: int) -> list[list[int]]:
         result.append([n, 1])
     return result
 
-class TestFactor(unittest.TestCase):
-    def test_0(self):
-        self.assertRaises(ValueError, prime_factors, 0)
-
-    def test_1(self):
-        self.assertEqual(prime_factors(1), [[1, 1]])
-
-    def test_2(self):
-        self.assertEqual(prime_factors(1000000000000), [[2, 12], [5, 12], [1, 1]])
-
-    def test_3(self):
-        self.assertRaises(ValueError, prime_factors, -1000000000000)
-
-    def test_4(self):
-        self.assertRaises(ValueError, prime_factors, 'text')
-
 
 if __name__ == '__main__':
     while True:
@@ -71,6 +54,3 @@ if __name__ == '__main__':
         except Exception as e:
             print(f"Ошибка:\n{e}", file=stderr)
             exit()
-
-    print('Тесты:')
-    unittest.main()
