@@ -1,6 +1,8 @@
 #!/usr/bin/python
 from collections.abc import Iterator
 from sys import stderr, argv
+
+
 def collatz(num: int) -> Iterator[int]:
     if num <= 0:
         raise ValueError("Number must be positive")
@@ -34,7 +36,6 @@ def run_test() -> None:
 
 
 def main() -> None:
-
     while True:
         try:
             a = int(input())
@@ -43,14 +44,13 @@ def main() -> None:
             print("Need number")
         except Exception as e:
             print(f"Unexpected error: {e}", file=stderr)
-            raise 
+            raise
 
     res = collatz(a)
     print(" -> ".join(map(str, res)))
 
 
 if __name__ == "__main__":
-
     if "test" in argv:
         run_test()
     else:
