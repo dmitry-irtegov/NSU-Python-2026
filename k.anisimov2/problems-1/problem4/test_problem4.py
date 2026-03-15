@@ -50,6 +50,51 @@ class TestGenerateSong(unittest.TestCase):
                 self.assertEqual(lines[base + 2], "And if one green bottle should accidentally fall,")
                 self.assertEqual(lines[base + 3], f"There’ll be {nxt_w} green {nxt_b} hanging on the wall.")
 
+    def test_full_output_for_10_exact(self):
+        expected = (
+            "Ten green bottles hanging on the wall,\n"
+            "Ten green bottles hanging on the wall,\n"
+            "And if one green bottle should accidentally fall,\n"
+            "There’ll be nine green bottles hanging on the wall.\n"
+            "Nine green bottles hanging on the wall,\n"
+            "Nine green bottles hanging on the wall,\n"
+            "And if one green bottle should accidentally fall,\n"
+            "There’ll be eight green bottles hanging on the wall.\n"
+            "Eight green bottles hanging on the wall,\n"
+            "Eight green bottles hanging on the wall,\n"
+            "And if one green bottle should accidentally fall,\n"
+            "There’ll be seven green bottles hanging on the wall.\n"
+            "Seven green bottles hanging on the wall,\n"
+            "Seven green bottles hanging on the wall,\n"
+            "And if one green bottle should accidentally fall,\n"
+            "There’ll be six green bottles hanging on the wall.\n"
+            "Six green bottles hanging on the wall,\n"
+            "Six green bottles hanging on the wall,\n"
+            "And if one green bottle should accidentally fall,\n"
+            "There’ll be five green bottles hanging on the wall.\n"
+            "Five green bottles hanging on the wall,\n"
+            "Five green bottles hanging on the wall,\n"
+            "And if one green bottle should accidentally fall,\n"
+            "There’ll be four green bottles hanging on the wall.\n"
+            "Four green bottles hanging on the wall,\n"
+            "Four green bottles hanging on the wall,\n"
+            "And if one green bottle should accidentally fall,\n"
+            "There’ll be three green bottles hanging on the wall.\n"
+            "Three green bottles hanging on the wall,\n"
+            "Three green bottles hanging on the wall,\n"
+            "And if one green bottle should accidentally fall,\n"
+            "There’ll be two green bottles hanging on the wall.\n"
+            "Two green bottles hanging on the wall,\n"
+            "Two green bottles hanging on the wall,\n"
+            "And if one green bottle should accidentally fall,\n"
+            "There’ll be one green bottle hanging on the wall.\n"
+            "One green bottle hanging on the wall,\n"
+            "One green bottle hanging on the wall,\n"
+            "If that one green bottle should accidentally fall\n"
+            "There’ll be no green bottles hanging on the wall.\n"
+        )
+        self.assertEqual(problem4.generate_ten_green_bottles(10), expected)
+
     def test_invalid_start_logs_and_returns_empty(self):
         err = io.StringIO()
         with redirect_stderr(err):
