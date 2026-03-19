@@ -1,12 +1,17 @@
-def find_in_pi_stream(filename: str, pattern: str, chunk_size: int = 1024 * 1024):
+from typing import Tuple, List
+
+
+def find_in_pi_stream(
+    filename: str, pattern: str, chunk_size: int = 1024 * 1024
+) -> Tuple[int, List[int]]:
     if not pattern:
         raise ValueError("Pattern must not be empty")
 
-    tail = ""
-    total = 0
-    positions = []
+    tail: str = ""
+    total: int = 0
+    positions: List[int] = []
 
-    global_pos = 0
+    global_pos: int = 0
 
     with open(filename, "r") as f:
         first_two = f.read(2)
@@ -20,15 +25,15 @@ def find_in_pi_stream(filename: str, pattern: str, chunk_size: int = 1024 * 1024
             if not chunk:
                 break
 
-            data = tail + chunk
+            data: str = tail + chunk
 
-            start = 0
+            start: int = 0
             while True:
-                idx = data.find(pattern, start)
+                idx: int = data.find(pattern, start)
                 if idx == -1:
                     break
 
-                real_pos = global_pos - len(tail) + idx
+                real_pos: int = global_pos - len(tail) + idx
                 total += 1
 
                 if len(positions) < 5:
@@ -46,7 +51,7 @@ def find_in_pi_stream(filename: str, pattern: str, chunk_size: int = 1024 * 1024
     return total, positions
 
 
-def main():
+def main() -> None:
     filename = "pi.txt"
 
     while True:
