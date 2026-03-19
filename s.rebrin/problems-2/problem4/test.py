@@ -29,6 +29,9 @@ class TestPiSearch(unittest.TestCase):
     def test_123(self):
         self.check_positions("123", 4079)
 
+    def test_111(self):
+        self.check_positions("111", 4044)
+
     def test_large_pattern(self):
         self.check_positions("4623462346634", 0)
 
