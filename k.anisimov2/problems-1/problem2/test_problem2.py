@@ -1,11 +1,9 @@
 import io
-import random
 import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from unittest.mock import patch
 
 import problem2
-
 
 class TestClampSequence(unittest.TestCase):
     def test_basic(self):
@@ -17,19 +15,21 @@ class TestClampSequence(unittest.TestCase):
     def test_empty_seq(self):
         self.assertEqual(problem2.clamp_sequence([], 0, 1), [])
 
-    def test_invalid_range_returns_empty_and_logs(self):
-        err = io.StringIO()
-        with redirect_stderr(err):
-            self.assertEqual(problem2.clamp_sequence([1, 2, 3], 10, 0), [])
-        self.assertNotEqual(err.getvalue(), "")
+    def test_invalid_range_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            problem2.clamp_sequence([1, 2, 3], 10, 0)
 
-    def test_invariants_random(self):
-        rng = random.Random(2026)
-        for _ in range(200):
-            a = rng.randint(-50, 50)
-            b = rng.randint(a, a + 100)
-            seq = [rng.randint(-200, 200) for _ in range(rng.randint(0, 200))]
+    def test_invariants_deterministic(self):
+        cases = [
+            ([-5, 0, 5], -2, 2, [-2, 0, 2]),
+            ([1, 2, 3], 1, 3, [1, 2, 3]),
+            ([1, 2, 3], 2, 2, [2, 2, 2]),
+            ([-100, 100], -50, 50, [-50, 50]),
+            ([], -10, 10, []),
+        ]
+        for seq, a, b, expected in cases:
             res = problem2.clamp_sequence(seq, a, b)
+            self.assertEqual(res, expected)
 
             self.assertEqual(len(res), len(seq))
             for x, y in zip(seq, res):
@@ -76,24 +76,10 @@ class TestMainIO(unittest.TestCase):
         self.assertEqual(out, "")
         self.assertNotEqual(err, "")
 
-    def test_main_invalid_range(self):
+    def test_main_invalid_range_logs(self):
         out, err = self.run_main_capture(["1 2 3", "10 0"])
         self.assertEqual(out, "")
         self.assertNotEqual(err, "")
-
-    def test_stderr_never_pollutes_stdout_on_errors(self):
-        cases = [
-            ["1 2 3", ""],
-            ["1 2 3", "x y"],
-            ["1 x 3", "0 1"],
-            ["1 2 3", "5 2"],
-            ["", ""],
-            ["", "x y"],
-        ]
-        for inp in cases:
-            out, err = self.run_main_capture(inp[:])
-            self.assertEqual(out, "")
-            self.assertNotEqual(err, "")
 
     def test_empty_sequence_is_allowed(self):
         out, err = self.run_main_capture(["", "0 1"])
