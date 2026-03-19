@@ -1,5 +1,6 @@
 import io
 import unittest
+import time
 from contextlib import redirect_stdout
 from unittest.mock import patch
 
@@ -38,6 +39,12 @@ class TestTimer(unittest.TestCase):
         output = buf.getvalue().strip()
         self.assertEqual(output, "Time elapsed: 1.0 s")
         self.assertEqual(timer.get_value(), 1.0)
+
+    def test_sleep(self):
+        with Timer() as timer:
+            time.sleep(2)
+
+        self.assertGreaterEqual(timer.get_value(), 2)
 
 
 if __name__ == "__main__":
