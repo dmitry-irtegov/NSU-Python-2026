@@ -17,5 +17,11 @@ class TestFactor(unittest.TestCase):
     def test_4(self):
         self.assertRaises(ValueError, prime_factors, 'text')
 
+    def test_zero(self):
+        self.assertRaises(ValueError, prime_factors, 0)
+
+    def test_negative(self):
+        self.assertRaises(ValueError, prime_factors, -100)
+
 if __name__ == "__main__":
     unittest.main()
