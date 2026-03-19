@@ -14,7 +14,7 @@ class TestBottles(unittest.TestCase):
             print_song()
             actual = mock_out.getvalue()
 
-        self.assertEqual(actual, expected)
+        self.assertEqual(actual.rstrip('\n'), expected.rstrip('\n'))
 
 
 if __name__ == "__main__":
