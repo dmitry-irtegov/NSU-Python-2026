@@ -1,0 +1,71 @@
+def find_in_pi_stream(filename: str, pattern: str, chunk_size: int = 1024 * 1024):
+    if not pattern:
+        raise ValueError("Pattern must not be empty")
+
+    tail = ""
+    total = 0
+    positions = []
+
+    global_pos = 0
+
+    with open(filename, "r") as f:
+        first_two = f.read(2)
+        if first_two != "3.":
+            f.seek(0)
+        else:
+            global_pos = 0
+
+        while True:
+            chunk = f.read(chunk_size)
+            if not chunk:
+                break
+
+            data = tail + chunk
+
+            start = 0
+            while True:
+                idx = data.find(pattern, start)
+                if idx == -1:
+                    break
+
+                real_pos = global_pos - len(tail) + idx
+                total += 1
+
+                if len(positions) < 5:
+                    positions.append(real_pos)
+
+                start = idx + 1
+
+            if len(pattern) > 1:
+                tail = data[-(len(pattern) - 1) :]
+            else:
+                tail = ""
+
+            global_pos += len(chunk)
+
+    return total, positions
+
+
+def main():
+    filename = "pi.txt"
+
+    while True:
+        pattern = input("\n> ").strip()
+
+        if pattern == "":
+            print("Pattern must not be empty")
+            continue
+
+        if not pattern.isdigit():
+            print("Pattern must contain only digits")
+            continue
+
+        total, positions = find_in_pi_stream(filename, pattern)
+
+        print(f"Found {total} results.")
+        if total > 0:
+            print("Positions:", *positions, "...")
+
+
+if __name__ == "__main__":
+    main()
