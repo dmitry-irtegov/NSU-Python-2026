@@ -1,21 +1,15 @@
-def print_collatz_seq(number, maxIter = 1 << 61):
-    seq = [number]
+def print_collatz_seq(number):
     n = number
     i = 0
+    print(n, end="")
     while n != 1:
-        if i == maxIter:
-            print("[]")
-            return
-
         if n % 2 == 0:
             n = n // 2
         else:
             n = 3 * n + 1
 
         i += 1
-        seq.append(n)
-
-    print(' -> '.join(str(n) for n in seq))
+        print(" -> " + str(n), end="")
 
 
 if __name__ == '__main__':
