@@ -92,5 +92,127 @@ class TestFindUrls(unittest.TestCase):
         expected = ["www.a-b.c-d.e-f.g-h.i-j.k-l.com"]
         self.assertEqual(find_urls(text), expected)
 
+    def test_no_urls(self):
+        text = "Просто текст без ссылок и цифр 12345."
+        self.assertEqual(find_urls(text), [])
+
+    def test_simple_http(self):
+        text = "http://example.com"
+        expected = ["http://example.com"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_simple_https(self):
+        text = "https://secure.org"
+        expected = ["https://secure.org"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_simple_www(self):
+        text = "www.site.net"
+        expected = ["www.site.net"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_hyphens_in_domain(self):
+        text = "http://my-site.org www.test-site.com"
+        expected = ["http://my-site.org", "www.test-site.com"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_numbers_in_domain(self):
+        text = "www.site123.com http://abc456.org"
+        expected = ["www.site123.com", "http://abc456.org"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_multiple_subdomains(self):
+        text = "http://a.b.c.d.org www.e.f.g.h.net"
+        expected = ["http://a.b.c.d.org", "www.e.f.g.h.net"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_port_http(self):
+        text = "http://example.com:8080"
+        expected = ["http://example.com:8080"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_port_www(self):
+        text = "www.site.net:3000"
+        expected = ["www.site.net:3000"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_port_and_path(self):
+        text = "http://example.com:8080/path www.site.net:3000/folder"
+        expected = ["http://example.com:8080/path", "www.site.net:3000/folder"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_simple_path(self):
+        text = "http://example.com/path/to/file"
+        expected = ["http://example.com/path/to/file"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_www_path(self):
+        text = "www.site.net/folder/subfolder"
+        expected = ["www.site.net/folder/subfolder"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_urls_with_comma(self):
+        text = "Visit www.example.com, http://test.org!"
+        expected = ["www.example.com", "http://test.org"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_urls_with_periods(self):
+        text = "Check http://abc.com. www.site.net."
+        expected = ["http://abc.com", "www.site.net"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_urls_with_semicolon(self):
+        text = "www.example.com; http://test.org;"
+        expected = ["www.example.com", "http://test.org"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_long_domain(self):
+        text = "www." + "sub-"*10 + "domain.com"
+        expected = ["www.sub-sub-sub-sub-sub-sub-sub-sub-sub-sub-domain.com"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_long_path(self):
+        path = "/folder/" + "/subfolder"*5 + "/file.html"
+        text = "http://example.com" + path
+        expected = ["http://example.com" + path]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_malformed_urls(self):
+        text = "http:/example.com www..site.net http://"
+        expected = []
+        self.assertEqual(find_urls(text), expected)
+
+    def test_urls_at_text_edges(self):
+        text = "www.start.com some text in the middle http://end.org"
+        expected = ["www.start.com", "http://end.org"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_uppercase_urls(self):
+        text = "WWW.EXAMPLE.COM Http://Test.Org https://SECURE.net"
+        expected = ["WWW.EXAMPLE.COM", "Http://Test.Org", "https://SECURE.net"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_mixed_case_urls(self):
+        text = "wWw.Site.Com hTtP://aBc.Org"
+        expected = ["wWw.Site.Com", "hTtP://aBc.Org"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_multiple_urls_with_ports_and_paths(self):
+        text = "www.one.com:3000/folder http://two.net:8080/path https://three.org:443/index.html"
+        expected = ["www.one.com:3000/folder", "http://two.net:8080/path", "https://three.org:443/index.html"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_long_subdomains_and_ports(self):
+        text = "http://a.b.c.d.e.f.g.h.i.j.com:9000/folder"
+        expected = ["http://a.b.c.d.e.f.g.h.i.j.com:9000/folder"]
+        self.assertEqual(find_urls(text), expected)
+
+    def test_many_urls_in_text(self):
+        text = ("www.one.com www.two.org http://three.net https://four.com www.five.net "
+                "http://six.org www.seven.com https://eight.net")
+        expected = ["www.one.com", "www.two.org", "http://three.net", "https://four.com",
+                    "www.five.net", "http://six.org", "www.seven.com", "https://eight.net"]
+        self.assertEqual(find_urls(text), expected)
+
 if __name__ == "__main__":
     unittest.main()
