@@ -6,7 +6,7 @@ import io
 song = """Ten green bottles hanging on the wall,
 Ten green bottles hanging on the wall,
 And if one green bottle should accidentally fall,
-There'll be nine green bottles hanging on the wall.
+There'll be nine green bottle hanging on the wall.
 
 Nine green bottles hanging on the wall,
 Nine green bottles hanging on the wall,
@@ -46,12 +46,12 @@ There'll be two green bottles hanging on the wall.
 Two green bottles hanging on the wall,
 Two green bottles hanging on the wall,
 And if one green bottle should accidentally fall,
-There'll be one green bottles hanging on the wall.
+There'll be one green bottle hanging on the wall.
 
 One green bottle hanging on the wall,
 One green bottle hanging on the wall,
 If that one green bottle should accidentally fall
-There'll be no green bottle hanging on the wall.""" + "\n\n"
+There'll be no green bottles hanging on the wall.""" + "\n\n"
 
 def tenGreenBottles():
     str_numbers = ['Ten', 'Nine', 'Eight', 'Seven', 'Six', 'Five', 'Four', 'Three', 'Two', 'One', 'No']
@@ -64,7 +64,7 @@ def tenGreenBottles():
         print(str_numbers[i] + first_line.format(s = 's' if i != 9 else ''))
         print(str_numbers[i] + first_line.format(s = 's' if i != 9 else ''))
         print(third_line.format('And if' if i != 9 else 'If that', ',' if i != 9 else ''))
-        print("There'll be " + str_numbers[i + 1].lower() + fourth_line.format('s' if i != 9 else '') + "\n")
+        print("There'll be " + str_numbers[i + 1].lower() + fourth_line.format('s' if i != 8 and i else '') + "\n")
 
 
 class TestBottles(unittest.TestCase):
@@ -74,6 +74,5 @@ class TestBottles(unittest.TestCase):
             self.assertEqual(fake_stdout.getvalue(), song)
 
 if __name__ == '__main__':
-    tenGreenBottles()
     unittest.main()
     
