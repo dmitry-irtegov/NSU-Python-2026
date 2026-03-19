@@ -1,4 +1,7 @@
-def collatz_sequence(n: int):
+from typing import Generator
+
+
+def collatz_sequence(n: int) -> Generator[int, None, None]:
     if not isinstance(n, int):
         raise TypeError("n must be int")
     if n <= 0:
