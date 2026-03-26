@@ -24,12 +24,13 @@ class TestGenerateTriples(unittest.TestCase):
         triples = problem1.generate_pythagorean_triples(50)
         self.assertTrue(all(x * x + y * y == z * z for x, y, z in triples))
 
-    def test_invalid_n_logs_and_returns_empty(self):
-        err = io.StringIO()
-        with redirect_stderr(err):
-            triples = problem1.generate_pythagorean_triples(0)
-        self.assertEqual(triples, [])
-        self.assertNotEqual(err.getvalue(), "")
+    def test_invalid_n_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            problem1.generate_pythagorean_triples(0)
+
+    def test_invalid_type_raises_type_error(self):
+        with self.assertRaises(TypeError):
+            problem1.generate_pythagorean_triples("10")
 
 
 class TestMainIO(unittest.TestCase):
@@ -43,9 +44,11 @@ class TestMainIO(unittest.TestCase):
             def side_effect():
                 return input_behavior
 
-        with (patch("builtins.input", side_effect=side_effect),
-              redirect_stdout(out_buf),
-              redirect_stderr(err_buf)):
+        with (
+            patch("builtins.input", side_effect=side_effect),
+            redirect_stdout(out_buf),
+            redirect_stderr(err_buf)
+        ):
             problem1.main()
 
         return out_buf.getvalue(), err_buf.getvalue()
@@ -53,7 +56,7 @@ class TestMainIO(unittest.TestCase):
     def test_main_empty_input_defaults_to_10(self):
         out, err = self.run_main_capture("")
         self.assertEqual(err, "")
-        self.assertIn("(3, 4, 5)", out)  # при n=10 точно есть
+        self.assertIn("(3, 4, 5)", out)
 
     def test_main_custom_n_5(self):
         out, err = self.run_main_capture("5")

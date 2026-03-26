@@ -1,13 +1,11 @@
 import sys
 
 
-def generate_pythagorean_triples(n: int):
+def generate_pythagorean_triples(n):
     if not isinstance(n, int):
-        print("Error: number must be an integer", file=sys.stderr)
-        return []
+        raise TypeError("number must be an integer")
     if n <= 0:
-        print("Error: number must be a positive integer", file=sys.stderr)
-        return []
+        raise ValueError("number must be a positive integer")
 
     return [
         (x, y, z)
@@ -29,8 +27,10 @@ def main():
         print(f"Input error: {e}", file=sys.stderr)
         return
 
-    triples = generate_pythagorean_triples(n)
-    if not triples:
+    try:
+        triples = generate_pythagorean_triples(n)
+    except Exception as e:
+        print(f"Input error: {e}", file=sys.stderr)
         return
 
     for t in triples:
