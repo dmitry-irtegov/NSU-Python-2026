@@ -1,31 +1,28 @@
-from __future__ import annotations
-
-from typing import List, Union
-
+from typing import Union, Iterable, Tuple
+from typing_extensions import Self
 
 class Vector:
     size: int
-    elements: List[float]
+    elements: Tuple[float, ...]
 
-    def __init__(self, elements: List[float]):
-        if len(elements) == 0:
-            raise ValueError("dimension must positive")
-        self.size = len(elements)
-        self.elements = elements
+    def __init__(self, elements: Iterable[float]):
+        self.elements = tuple(elements)
+        self.size = len(self.elements)
 
-    @staticmethod
-    def null_vector(dim: int) -> Vector:
-        if dim < 1:
-            raise ValueError("dimension must positive")
-        return Vector([0 for _ in range(1, dim + 1)])
 
     @staticmethod
-    def iden_vector(dim: int) -> Vector:
+    def null_vector(dim: int) -> "Vector":
         if dim < 1:
             raise ValueError("dimension must positive")
-        return Vector([1 for _ in range(1, dim + 1)])
+        return Vector(range(1, dim + 1))
 
-    def __add__(self, other: Vector) -> Vector:
+    @staticmethod
+    def iden_vector(dim: int) -> "Vector":
+        if dim < 1:
+            raise ValueError("dimension must positive")
+        return Vector(range(1, dim + 1))
+
+    def __add__(self, other: Self) -> "Vector":
         if isinstance(other, Vector):
             if other.size != self.size:
                 raise ValueError("Adding vectors with different sizes")
@@ -34,7 +31,7 @@ class Vector:
         else:
             raise TypeError("Adding with not a vector")
 
-    def __sub__(self, other: Vector) -> Vector:
+    def __sub__(self, other: Self) -> "Vector":
         if isinstance(other, Vector):
             if other.size != self.size:
                 raise ValueError("sub vectors with different sizes")
@@ -43,7 +40,7 @@ class Vector:
         else:
             raise TypeError("sub with not a vector")
 
-    def __mul__(self, other: Union[Vector, float]) -> Union[Vector, float]:
+    def __mul__(self, other: Union["Vector", float]) -> Union["Vector", float]:
         if isinstance(other, Vector):
             if other.size != self.size:
                 raise ValueError("mul vectors with different sizes")

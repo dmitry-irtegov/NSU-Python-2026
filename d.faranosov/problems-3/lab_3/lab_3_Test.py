@@ -31,8 +31,8 @@ class MyTestCase(unittest.TestCase):
     def test_add_does_not_modify_original(self):
         v1 = Vector([1, 2, 3])
         v2 = Vector([4, 5, 6])
-        v1_copy = Vector(v1.elements.copy())
-        v2_copy = Vector(v2.elements.copy())
+        v1_copy = Vector(v1.elements)
+        v2_copy = Vector(v2.elements)
         v1 + v2
         self.assertEqual(v1.elements, v1_copy.elements)
         self.assertEqual(v2.elements, v2_copy.elements)
@@ -70,8 +70,8 @@ class MyTestCase(unittest.TestCase):
     def test_sub_does_not_modify_original(self):
         v1 = Vector([1, 2, 3])
         v2 = Vector([4, 5, 6])
-        v1_copy = Vector(v1.elements.copy())
-        v2_copy = Vector(v2.elements.copy())
+        v1_copy = Vector(v1.elements)
+        v2_copy = Vector(v2.elements)
         v1 - v2
         self.assertEqual(v1.elements, v1_copy.elements)
         self.assertEqual(v2.elements, v2_copy.elements)
@@ -102,7 +102,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_scalar_multiplication_does_not_modify_original(self):
         v = Vector([1, 2, 3])
-        v_copy = Vector(v.elements.copy())
+        v_copy = Vector(v.elements)
         v * 2.0
         self.assertEqual(v.elements, v_copy.elements)
 
@@ -116,7 +116,7 @@ class MyTestCase(unittest.TestCase):
     def test_scalar_multiplication_large_vector(self):
         v = Vector(list(range(1000)))
         result = v * 0.5
-        expected = [i * 0.5 for i in range(1000)]
+        expected = tuple([i * 0.5 for i in range(1000)])
         self.assertEqual(result.elements, expected)
 
     def test_different_vectors(self):
