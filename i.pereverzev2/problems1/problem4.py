@@ -3,28 +3,21 @@ import unittest
 import sys
 from io import StringIO
 
-
 def song():
-    part = "green bottles hanging on the wall"
+    part1 = "green bottle" 
+    part2 = " hanging on the wall"
     nums = [
-        "Ten",
-        "Nine",
-        "Eight",
-        "Seven",
-        "Six",
-        "Five",
-        "Four",
-        "Three",
-        "Two",
-        "One",
-        "no",
+        "Ten", "Nine", "Eight", "Seven", "Six", "Five", 
+        "Four", "Three", "Two", "One", "no"
     ]
+    
     for i in range(len(nums) - 1):
-        s = f"{nums[i]} {part},"
+        current_s = "" if i == 9 else "s"
+        s = f"{nums[i]} {part1}{current_s}{part2},"
         print(f"{s}\n{s}")
-        print("And if one green bottle should accidentally fall,")
+        print(f"And if {'that' if i == 9 else 'one'} green bottle should accidentally fall,")
         lower_num = nums[i + 1].lower()
-        print(f"There'll be {lower_num} {part}.")
+        print(f"There'll be {lower_num} {part1}{'' if lower_num == 'one' else 's'}{part2}.")
 
 
 class TestSong(unittest.TestCase):
@@ -73,10 +66,10 @@ There'll be two green bottles hanging on the wall.
 Two green bottles hanging on the wall,
 Two green bottles hanging on the wall,
 And if one green bottle should accidentally fall,
-There'll be one green bottles hanging on the wall.
-One green bottles hanging on the wall,
-One green bottles hanging on the wall,
-And if one green bottle should accidentally fall,
+There'll be one green bottle hanging on the wall.
+One green bottle hanging on the wall,
+One green bottle hanging on the wall,
+And if that green bottle should accidentally fall,
 There'll be no green bottles hanging on the wall.
 """
         self.assertEqual(output, expected)
