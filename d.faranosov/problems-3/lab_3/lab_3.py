@@ -1,5 +1,4 @@
 from typing import Union, Iterable, Tuple
-from typing_extensions import Self
 
 class Vector:
     size: int
