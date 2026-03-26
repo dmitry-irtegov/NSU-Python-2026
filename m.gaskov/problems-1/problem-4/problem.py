@@ -1,15 +1,10 @@
 def bottles_word(n: int) -> str:
-    if not isinstance(n, int):
-        raise TypeError("n must be int")
     if n < 0:
         raise ValueError("n must be >= 0")
     return "bottle" if n == 1 else "bottles"
 
 
 def number_word(n: int) -> str:
-    if not isinstance(n, int):
-        raise TypeError("n must be int")
-
     words = {
         1: "One",
         2: "Two",
