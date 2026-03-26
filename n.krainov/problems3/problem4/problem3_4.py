@@ -8,11 +8,10 @@ def cartesian_power(elements, n):
     while True:
         yield tuple(items[i] for i in indices)
 
-        j = 0
-        while j < len(items) and indices[j] == len(items) - 1:
-            j += 1
-
-        if j == len(items):
+        j = n - 1
+        while j >= 0 and indices[j] == len(items) - 1:
+            j -= 1
+        if j < 0:
             break
 
         indices[j] += 1
