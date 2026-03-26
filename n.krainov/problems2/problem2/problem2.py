@@ -1,3 +1,5 @@
+from sys import stderr
+
 
 def build_dictionary(input_dict):
     latin_to_english = dict()
@@ -27,13 +29,13 @@ if __name__ == "__main__":
             lines = file.readlines()
 
     except Exception as e:
-        print("error occurred during opening file", e)
+        stderr.print("error occurred during opening file", e)
         exit(1)
 
     try:
         latin_to_english = build_dictionary(lines)
     except Exception as e:
-        print("error occurred during building dictionary", e)
+        stderr.print("error occurred during building dictionary", e)
         exit(1)
 
     print(latin_to_english)
