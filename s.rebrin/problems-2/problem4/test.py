@@ -1,12 +1,12 @@
 import unittest
-from main import find_in_pi_stream
+from main import find_in_pi_stream_regex
 
 
 class TestPiSearch(unittest.TestCase):
     FILE = "pi.txt"
 
     def check_positions(self, pattern: str, total_expected: int):
-        total, positions = find_in_pi_stream(self.FILE, pattern)
+        total, positions = find_in_pi_stream_regex(self.FILE, pattern)
         self.assertEqual(total, total_expected)
 
         positions_set = set(positions)
@@ -40,7 +40,7 @@ class TestPiSearch(unittest.TestCase):
 
     def test_141592(self):
         self.check_positions("141592", 4)
-        total, positions = find_in_pi_stream(self.FILE, "141592")
+        total, positions = find_in_pi_stream_regex(self.FILE, "141592")
         self.assertEqual(positions[0], 0)
 
     def test_single_digit(self):
@@ -57,7 +57,7 @@ class TestPiSearch(unittest.TestCase):
 
     def test_empty_pattern(self):
         with self.assertRaises(ValueError):
-            find_in_pi_stream(self.FILE, "")
+            find_in_pi_stream_regex(self.FILE, "")
 
 
 if __name__ == "__main__":
