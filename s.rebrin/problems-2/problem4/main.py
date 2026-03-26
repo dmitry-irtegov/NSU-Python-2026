@@ -16,7 +16,7 @@ def find_in_pi_stream(
     with open(filename, "r") as f:
         first_two = f.read(2)
         if first_two != "3.":
-            f.seek(0)
+            tail = first_two
         else:
             global_pos = 0
 
@@ -25,7 +25,9 @@ def find_in_pi_stream(
             if not chunk:
                 break
 
-            data: str = tail + chunk
+            filtered: str = "".join(c for c in chunk if c.isdigit())
+
+            data: str = tail + filtered
 
             start: int = 0
             while True:
@@ -46,7 +48,7 @@ def find_in_pi_stream(
             else:
                 tail = ""
 
-            global_pos += len(chunk)
+            global_pos += len(filtered)
 
     return total, positions
 

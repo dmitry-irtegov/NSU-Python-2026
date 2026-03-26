@@ -9,14 +9,34 @@ class TestPiSearch(unittest.TestCase):
         total, positions = find_in_pi_stream(self.FILE, pattern)
         self.assertEqual(total, total_expected)
 
+        positions_set = set(positions)
+        results = {}
+
+        digit_pos = 0
+
         with open(self.FILE, "r") as f:
-            for pos in positions:
-                f.seek(pos + 2)
-                chunk = f.read(len(pattern))
-                self.assertEqual(chunk, pattern)
+            pref = f.read(2)
+            if pref == "3.":
+                pref = ""
+            while True:
+                chunk = pref + f.read(1024 * 1024)
+                if not chunk:
+                    break
+
+                digits = "".join(c for c in chunk if c.isdigit())
+
+                i = 0
+                while i < len(digits):
+                    if digit_pos in positions_set:
+                        results[digit_pos] = digits[i : i + len(pattern)]
+                    digit_pos += 1
+                    i += 1
+
+        for pos in positions:
+            self.assertEqual(results[pos], pattern)
 
     def test_145322(self):
-        self.check_positions("145322", 2)
+        self.check_positions("145322", 4)
 
     def test_141592(self):
         self.check_positions("141592", 4)
@@ -27,10 +47,10 @@ class TestPiSearch(unittest.TestCase):
         self.check_positions("1", 419139)
 
     def test_123(self):
-        self.check_positions("123", 4079)
+        self.check_positions("123", 4185)
 
     def test_111(self):
-        self.check_positions("111", 4044)
+        self.check_positions("111", 4172)
 
     def test_large_pattern(self):
         self.check_positions("4623462346634", 0)
