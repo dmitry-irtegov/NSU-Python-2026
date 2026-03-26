@@ -22,23 +22,19 @@ class Vector:
             raise ValueError("dimension must positive")
         return Vector(range(1, dim + 1))
 
-    def __add__(self, other: Self) -> "Vector":
-        if isinstance(other, Vector):
-            if other.size != self.size:
-                raise ValueError("Adding vectors with different sizes")
+    def __add__(self, other: "Vector") -> "Vector":
+        if other.size != self.size:
+            raise ValueError("Adding vectors with different sizes")
 
-            return Vector([x + y for (x, y) in zip(self.elements, other.elements)])
-        else:
-            raise TypeError("Adding with not a vector")
+        return Vector([x + y for (x, y) in zip(self.elements, other.elements)])
 
-    def __sub__(self, other: Self) -> "Vector":
-        if isinstance(other, Vector):
-            if other.size != self.size:
-                raise ValueError("sub vectors with different sizes")
 
-            return Vector([x - y for (x, y) in zip(self.elements, other.elements)])
-        else:
-            raise TypeError("sub with not a vector")
+    def __sub__(self, other: "Vector") -> "Vector":
+        if other.size != self.size:
+            raise ValueError("sub vectors with different sizes")
+
+        return Vector([x - y for (x, y) in zip(self.elements, other.elements)])
+
 
     def __mul__(self, other: Union["Vector", float]) -> Union["Vector", float]:
         if isinstance(other, Vector):
@@ -48,8 +44,8 @@ class Vector:
             return sum([x*y for (x, y) in zip(self.elements, other.elements)])
         elif isinstance(other, float):
             return Vector([x * other for x in self.elements])
-        else:
-            raise TypeError("multiply with smth not a Vector or float")
+
+
 
     def __eq__(self, other) -> bool:
         if isinstance(other, Vector):
