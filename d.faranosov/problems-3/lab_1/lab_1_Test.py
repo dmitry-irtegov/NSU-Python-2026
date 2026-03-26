@@ -1,5 +1,7 @@
 import unittest
-from random import randint
+from random import randint, seed
+
+seed(0)
 
 
 from lab_1 import Table
