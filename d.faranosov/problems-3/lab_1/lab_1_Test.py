@@ -1,10 +1,9 @@
 import unittest
 from random import randint, seed
 
-seed(0)
-
-
 from lab_1 import Table
+
+seed(0)
 
 def create_table():
     return Table([[12, 45, 78, 23, 56, 89, 34, 67, 90, 11, 44, 77], [33, 66, 99, 22, 55, 88, 31, 64, 97, 20, 53, 86],
