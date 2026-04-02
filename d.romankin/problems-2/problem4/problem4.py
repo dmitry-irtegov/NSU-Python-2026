@@ -1,4 +1,4 @@
-from cProfile import run as profile, runctx
+from cProfile import runctx
 
 from sys import stderr, argv
 from enum import Enum
