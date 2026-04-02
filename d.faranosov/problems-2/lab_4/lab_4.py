@@ -38,9 +38,6 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("Ctrl+C pressed", file=stderr)
         exit(1)
-    except Exception as ex:
-        print("Exception raised", ex, file=stderr)
-        exit(1)
     except FileNotFoundError:
         print("Wrong file path", file=stderr)
         exit(1)
@@ -52,6 +49,9 @@ if __name__ == '__main__':
         exit(1)
     except OSError as e:
         print(f"os error: {e}", file=stderr)
+        exit(1)
+    except Exception as ex:
+        print("Exception raised", ex, file=stderr)
         exit(1)
 
 
