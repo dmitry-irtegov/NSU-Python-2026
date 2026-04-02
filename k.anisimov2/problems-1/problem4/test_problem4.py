@@ -95,12 +95,13 @@ class TestGenerateSong(unittest.TestCase):
         )
         self.assertEqual(problem4.generate_ten_green_bottles(10), expected)
 
-    def test_invalid_start_logs_and_returns_empty(self):
-        err = io.StringIO()
-        with redirect_stderr(err):
-            song = problem4.generate_ten_green_bottles(0)
-        self.assertEqual(song, "")
-        self.assertNotEqual(err.getvalue(), "")
+    def test_invalid_start_raises_value_error(self):
+        with self.assertRaises(ValueError):
+            problem4.generate_ten_green_bottles(0)
+
+    def test_invalid_start_type_raises_type_error(self):
+        with self.assertRaises(TypeError):
+            problem4.generate_ten_green_bottles("10")
 
     def test_numbers_only_from_0_to_10_if_any(self):
         song = problem4.generate_ten_green_bottles(10)
@@ -113,7 +114,7 @@ class TestMainIO(unittest.TestCase):
         out_buf = io.StringIO()
         err_buf = io.StringIO()
 
-        if isinstance(input_behavior, Exception):
+        if isinstance(input_behavior, BaseException):
             side_effect = input_behavior
         else:
             def side_effect():
