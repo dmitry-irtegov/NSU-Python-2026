@@ -1,4 +1,4 @@
-from cProfile import run as profile
+from cProfile import run as profile, runctx
 
 from sys import stderr, argv
 from enum import Enum
@@ -51,18 +51,38 @@ def main(seq, replace=Replacement.REPLACE):
         print("Cannot open file ", err, file=stderr)
         return        
 
+def compare_replaces(replace):
+    try:
+        with open("pi.txt", "r") as file:
+                file.read(2)
+                data = file.read()
+                
+                if replace == Replacement.FILTER:
+                    runctx("data = ''.join(filter(str.isdigit, data))", globals(), {'data' : data})
+                elif replace == Replacement.REGEXP:
+                    runctx(r"data = sub(r'\D', '', data)", globals(), {'data' : data})
+                elif replace == Replacement.LIST:
+                    runctx("data = ''.join([x for x in data if x.isdigit()])", globals(), {'data' : data})
+                elif replace == Replacement.REPLACE:
+                    runctx(r"data = data.replace('\n', '')", globals(), {'data' : data})        
+            
+    except OSError as err:
+        print("Cannot open file ", err, file=stderr)
+        return      
 if __name__ == "__main__":
     try:
-        seq = (input("Enter sequence to search for\n"))
+        
         if (len(argv) >= 2):
             if argv[1] == "profile":
                 for rep in Replacement:
                     print("\n\n---PROFILING %s ---\n\n" % rep.name)
-                    profile("main(seq, %s)" % rep)    
+                    compare_replaces(rep)    
 
             else:
+                seq = (input("Enter sequence to search for\n"))
                 main(seq)
         else:
+            seq = (input("Enter sequence to search for\n"))
             main(seq)
     except EOFError as eof:
         print("EOF error occured", eof, file=stderr)
