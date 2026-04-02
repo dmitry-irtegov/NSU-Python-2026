@@ -4,8 +4,8 @@ from sys import stderr
 
 
 def factorize(num):
-    div = 2
     res = []
+    div = 2
     exp = 0
     while num > 1:
         if num % div == 0:
