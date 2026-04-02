@@ -19,7 +19,8 @@ nums = [
 
 class TestCumulativeSums(unittest.TestCase):
     def test_zero(self):
-        self.assertEqual(factorize(0), [])
+        with self.assertRaises(ValueError):
+            factorize(0)
 
     def test_one(self):
         self.assertEqual(factorize(1), [])

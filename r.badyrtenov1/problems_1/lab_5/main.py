@@ -4,10 +4,13 @@ from sys import stderr
 
 
 def factorize(num):
+    if num <= 0:
+        raise ValueError("number must be a positive integer")
+
     res = []
     div = 2
     exp = 0
-    while num > 1:
+    while num != 1:
         if num % div == 0:
             num //= div
             exp += 1
