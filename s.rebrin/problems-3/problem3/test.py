@@ -68,7 +68,7 @@ class TestVector(unittest.TestCase):
         self.assertEqual(v.length(), 5.0)
 
     def test_invalid_element_type(self):
-        with self.assertRaises(TypeError):
+        with self.assertRaises(ValueError):
             Vector([1, 2, "a"])
 
     def test_add_wrong_type(self):
