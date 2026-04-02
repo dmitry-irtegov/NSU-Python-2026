@@ -1,6 +1,7 @@
 from random import randint, choice, seed
 from string import ascii_lowercase
 from sys import stderr
+import os
 
 def generate():
     latin_words = [
@@ -28,7 +29,7 @@ def generate():
 
 
     try:
-        with open("hard.txt", "w", encoding="utf-8") as file:
+        with open(os.path.dirname(__file__) + "\\hard.txt", "w", encoding="utf-8") as file:
             for word in my_words:
                 cnt_to_transl = randint(1, 4)
                 trans_list = [latin_words[randint(0, len(latin_words) - 1)] for _ in range(cnt_to_transl)]

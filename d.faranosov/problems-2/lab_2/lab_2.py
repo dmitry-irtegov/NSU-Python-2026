@@ -48,7 +48,7 @@ def write_dict(converted_list):
 
 if __name__ == '__main__':
     if len(argv) < 2:
-        print("No file to convert", file=stderr)
+        print("No file to convert\n[Usage]: python lab_2.py \"fileName\"", file=stderr)
         exit(1)
     file_path = argv[1]
     encoding="utf-8"

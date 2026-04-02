@@ -1,11 +1,11 @@
 import unittest
 from lab_2 import convert_dict_from_file, get_dict_from_file, convert_dict
 from dict_generator import generate
-
+import os
 
 class MyTestCase(unittest.TestCase):
     def test_simple(self):
-        converted_dict = convert_dict_from_file("simple.txt")
+        converted_dict = convert_dict_from_file(os.path.dirname(__file__) + "\\simple.txt")
         ans = [('baca', ['fruit']),
                ('bacca', ['fruit']),
                ('malum', ['apple', 'punishment']),
@@ -17,7 +17,7 @@ class MyTestCase(unittest.TestCase):
 
     def test_hard(self):
         generate()
-        file_dict = get_dict_from_file("hard.txt")
+        file_dict = get_dict_from_file(os.path.dirname(__file__) + "\\hard.txt")
         converted_dict = convert_dict(file_dict)
         last_word = ""
         for (key, values) in converted_dict:
