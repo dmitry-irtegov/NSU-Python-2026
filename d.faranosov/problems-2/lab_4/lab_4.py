@@ -32,24 +32,6 @@ if __name__ == '__main__':
         res_cnt, res_list = get_stats(digits)
         print(f'Found count: {res_cnt}\nFound list: {res_list}')
 
-    except EOFError:
-        print("Input error", file=stderr)
-        exit(1)
-    except KeyboardInterrupt:
-        print("Ctrl+C pressed", file=stderr)
-        exit(1)
-    except FileNotFoundError:
-        print("Wrong file path", file=stderr)
-        exit(1)
-    except PermissionError:
-        print("No rights for file", file=stderr)
-        exit(1)
-    except IsADirectoryError:
-        print("file is not a regular", file=stderr)
-        exit(1)
-    except OSError as e:
-        print(f"os error: {e}", file=stderr)
-        exit(1)
     except Exception as ex:
         print("Exception raised", ex, file=stderr)
         exit(1)
