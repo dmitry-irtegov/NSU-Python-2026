@@ -2,8 +2,13 @@ import unittest
 from pathlib import Path
 import textwrap
 
-def convert_dictionary(file_path: str) -> Path:
+def insert_sorted(lst, value):
+    i = 0
+    while i < len(lst) and lst[i] < value:
+        i += 1
+    lst.insert(i, value)
 
+def convert_dictionary(file_path: str) -> Path:
     file_path = Path(file_path)
     lat_dict = {}
 
@@ -17,17 +22,18 @@ def convert_dictionary(file_path: str) -> Path:
 
             for latin in latins.split(","):
                 latin = latin.strip()
-                lat_dict.setdefault(latin, []).append(eng)
+                lat_dict.setdefault(latin, [])
+                insert_sorted(lat_dict[latin], eng)
 
-    for latin in lat_dict:
-        lat_dict[latin] = sorted(lat_dict[latin])
-
-    lat_dict = dict(sorted(lat_dict.items()))
+    sorted_keys = []
+    for key in lat_dict:
+        insert_sorted(sorted_keys, key)
 
     output_path = file_path.with_name(file_path.stem + "_converted" + file_path.suffix)
 
     with open(output_path, "w", encoding="utf-8") as f:
-        for latin, english_words in lat_dict.items():
+        for latin in sorted_keys:
+            english_words = lat_dict[latin]
             f.write(f"{latin} - {', '.join(english_words)}\n")
 
     return output_path
