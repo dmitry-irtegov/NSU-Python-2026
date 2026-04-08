@@ -51,20 +51,29 @@ def main(seq, replace=Replacement.REPLACE):
         print("Cannot open file ", err, file=stderr)
         return        
 
-def compare_replaces(replace):
+def compare_replaces():
     try:
         with open("pi.txt", "r") as file:
                 file.read(2)
                 data = file.read()
+                globs = globals()
+                locs = {'data' : data}
                 
-                if replace == Replacement.FILTER:
-                    runctx("data = ''.join(filter(str.isdigit, data))", globals(), {'data' : data})
-                elif replace == Replacement.REGEXP:
-                    runctx(r"data = sub(r'\D', '', data)", globals(), {'data' : data})
-                elif replace == Replacement.LIST:
-                    runctx("data = ''.join([x for x in data if x.isdigit()])", globals(), {'data' : data})
-                elif replace == Replacement.REPLACE:
-                    runctx(r"data = data.replace('\n', '')", globals(), {'data' : data})        
+                print("\n\n---PROFILING FILTER ---\n\n")
+
+                runctx("data = ''.join(filter(str.isdigit, data))", globs, locs)
+                
+                print("\n\n---PROFILING REGEXP ---\n\n")
+
+                runctx(r"data = sub(r'\D', '', data)", globs, locs)
+                
+                print("\n\n---PROFILING LIST ---\n\n")
+
+                runctx("data = ''.join([x for x in data if x.isdigit()])", globs, locs)
+                
+                print("\n\n---PROFILING REPLACE ---\n\n")
+
+                runctx(r"data = data.replace('\n', '')", globs, locs)        
             
     except OSError as err:
         print("Cannot open file ", err, file=stderr)
@@ -73,19 +82,14 @@ if __name__ == "__main__":
     try:
         
         if (len(argv) >= 2):
-            if argv[1] == "profile":
-                for rep in Replacement:
-                    print("\n\n---PROFILING %s ---\n\n" % rep.name)
-                    compare_replaces(rep)    
-
+            if argv[1] == "profile":    
+                compare_replaces()    
             else:
                 seq = (input("Enter sequence to search for\n"))
                 main(seq)
         else:
             seq = (input("Enter sequence to search for\n"))
             main(seq)
-    except EOFError as eof:
-        print("EOF error occured", eof, file=stderr)
     except Exception as e:
         print("Exception occured", e, file=stderr)
 
