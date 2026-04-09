@@ -1,3 +1,4 @@
+import sys
 from time import time
 from typing import Tuple, List
 from re import sub
@@ -119,6 +120,31 @@ def find_in_pi_stream_regex(
     return total, positions, glob_time
 
 
+def time_test_re_first() -> None:
+    filename = "pi.txt"
+
+    while True:
+        try:
+            pattern = input("\n> ").strip()
+        except EOFError:
+            print("\nEOF exiting")
+            break
+
+        if pattern == "":
+            print("Pattern must not be empty")
+            continue
+
+        if not pattern.isdigit():
+            print("Pattern must contain only digits")
+            continue
+
+        total, positions, timee = find_in_pi_stream_regex(filename, pattern)
+        print("Time with regex:", timee, "seconds")
+
+        _, _, timee = find_in_pi_stream(filename, pattern)
+        print("Time:", timee, "seconds")
+
+
 def time_test() -> None:
     filename = "pi.txt"
 
@@ -141,13 +167,11 @@ def time_test() -> None:
         print("Time:", timee, "seconds")
 
         total, positions, timee = find_in_pi_stream_regex(filename, pattern)
-
         print("Time with regex:", timee, "seconds")
-
-        print(f"Found {total} results.")
-        if total > 0:
-            print("Positions:", *positions, "...")
 
 
 if __name__ == "__main__":
-    time_test()
+    if "re" in sys.argv:
+        time_test_re_first()
+    else:
+        time_test()
