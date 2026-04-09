@@ -1,30 +1,33 @@
 import random
 import re
 import sys
+from typing import List
 
 
-def randomize_words(s: str, seed: int = 42, mode: str = "random"):
+def randomize_words(s: str, seed: int = 42, mode: str = "random") -> str:
     if mode not in ("random", "sort"):
         raise ValueError(f"Invalid mode: {mode}")
+
     if mode == "random":
         random.seed(seed)
 
-    tokens = re.findall(r"\w+|[^\w]+", s)
-    result = []
+    tokens: List[str] = re.findall(r"\w+|[^\w]+", s)
+    result: List[str] = []
 
     for token in tokens:
         if token.isalpha() and len(token) > 2:
-            middle = list(token[1:-1])
+            middle: List[str] = list(token[1:-1])
 
             if mode == "random":
                 random.shuffle(middle)
-            elif mode == "sort":
+            else:
                 middle.sort()
 
-            new_word = token[0] + "".join(middle) + token[-1]
+            new_word: str = token[0] + "".join(middle) + token[-1]
             result.append(new_word)
         else:
             result.append(token)
+
     return "".join(result)
 
 
@@ -37,7 +40,7 @@ def main() -> None:
 
     while True:
         try:
-            pattern = input("\n> ").strip()
+            pattern: str = input("\n> ").strip()
         except EOFError:
             print("\nEOF exiting")
             break
@@ -45,8 +48,7 @@ def main() -> None:
         if pattern == "":
             continue
 
-        res = randomize_words(pattern, 42, mode=mode)
-
+        res: str = randomize_words(pattern, 42, mode=mode)
         print(res)
 
 
