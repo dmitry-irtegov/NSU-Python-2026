@@ -1,5 +1,4 @@
-from cProfile import runctx
-
+from cProfile import Profile
 from sys import stderr, argv
 from enum import Enum
 from re import sub
@@ -56,24 +55,39 @@ def compare_replaces():
         with open("pi.txt", "r") as file:
                 file.read(2)
                 data = file.read()
-                globs = globals()
-                locs = {'data' : data}
-                
+                data_replace = str(data)
+                data_filter = str(data)
+                data_list = str(data)
+                data_regexp = str(data)
                 print("\n\n---PROFILING FILTER ---\n\n")
 
-                runctx("data = ''.join(filter(str.isdigit, data))", globs, locs)
-                
-                print("\n\n---PROFILING REGEXP ---\n\n")
+                with Profile() as filter_def:
 
-                runctx(r"data = sub(r'\D', '', data)", globs, locs)
+                    data_filter = ''.join(filter(str.isdigit, data_filter))
                 
-                print("\n\n---PROFILING LIST ---\n\n")
 
-                runctx("data = ''.join([x for x in data if x.isdigit()])", globs, locs)
-                
+                    filter_def.print_stats()  
+
+
                 print("\n\n---PROFILING REPLACE ---\n\n")
+                with Profile() as replace_pr:
 
-                runctx(r"data = data.replace('\n', '')", globs, locs)        
+
+                    data_replace = data_replace.replace('\n', '')
+                 
+
+                    replace_pr.print_stats()    
+
+
+                print("\n\n---PROFILING LIST ---\n\n")
+                with Profile() as list_pr:
+                    data_list = ''.join([x for x in data_list if x.isdigit()])
+                    list_pr.print_stats()
+
+                print("\n\n---PROFILING REGEXP ---\n\n")
+                with Profile() as regexp_pr:
+                    data_regexp = sub(r'\D', '', data_regexp)
+                    regexp_pr.print_stats()
             
     except OSError as err:
         print("Cannot open file ", err, file=stderr)
