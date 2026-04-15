@@ -1,5 +1,5 @@
-from cProfile import Profile
 from sys import stderr, argv
+from time import time
 from enum import Enum
 from re import sub
 class Replacement(Enum):
@@ -59,35 +59,49 @@ def compare_replaces():
                 data_filter = str(data)
                 data_list = str(data)
                 data_regexp = str(data)
-                print("\n\n---PROFILING FILTER ---\n\n")
-
-                with Profile() as filter_def:
-
-                    data_filter = ''.join(filter(str.isdigit, data_filter))
                 
+                print("\n\n---PROFILING REGEXP ---\n\n")
+                
+                start = time()
+                data_regexp = sub(r'\D', '', data_regexp)
+                end = time()
 
-                    filter_def.print_stats()  
+                replace_time = end - start
 
+                print("RegexpReplace time = ", replace_time)
+                
+                print("\n\n---PROFILING FILTER ---\n\n")
+                start = time()
+                data_filter = ''.join(filter(str.isdigit, data_filter))
+                end = time()
 
+                replace_time = end - start
+
+                print("Filter time = ", replace_time)
+
+            
                 print("\n\n---PROFILING REPLACE ---\n\n")
-                with Profile() as replace_pr:
 
+                start = time()
+                data_replace = data_replace.replace('\n', '')
+                end = time()
+                
+                replace_time = end - start
 
-                    data_replace = data_replace.replace('\n', '')
-                 
-
-                    replace_pr.print_stats()    
+                print("Replace time = ", replace_time)
 
 
                 print("\n\n---PROFILING LIST ---\n\n")
-                with Profile() as list_pr:
-                    data_list = ''.join([x for x in data_list if x.isdigit()])
-                    list_pr.print_stats()
+                start = time()
+                data_list = ''.join([x for x in data_list if x.isdigit()])
+                end = time()
+                
+                replace_time = end - start
 
-                print("\n\n---PROFILING REGEXP ---\n\n")
-                with Profile() as regexp_pr:
-                    data_regexp = sub(r'\D', '', data_regexp)
-                    regexp_pr.print_stats()
+                print("List time = ", replace_time)
+                
+
+                
             
     except OSError as err:
         print("Cannot open file ", err, file=stderr)
