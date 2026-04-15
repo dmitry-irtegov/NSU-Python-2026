@@ -38,17 +38,13 @@ def main() -> None:
     else:
         mode = "random"
 
-    while True:
-        try:
-            pattern: str = input("\n> ").strip()
-        except EOFError:
-            print("\nEOF exiting")
-            break
+    for line in sys.stdin:
+        line = line.rstrip("\n")
 
-        if pattern == "":
+        if line == "":
             continue
 
-        res: str = randomize_words(pattern, 42, mode=mode)
+        res = randomize_words(line, 42, mode=mode)
         print(res)
 
 
