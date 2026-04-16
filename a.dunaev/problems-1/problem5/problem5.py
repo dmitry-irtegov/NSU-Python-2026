@@ -4,7 +4,7 @@ import math
 import random
 
 
-def _is_prime(n: int) -> bool:
+def _is_prime(n):
     if n < 2:
         return False
 
@@ -37,12 +37,10 @@ def _is_prime(n: int) -> bool:
     return True
 
 
-def _pollard_rho(n: int) -> int:
+def _pollard_rho(n):
     if n % 2 == 0:
         return 2
-
     rng = random.Random(n)
-
     while True:
         x = rng.randrange(2, n - 1)
         y = x
@@ -59,7 +57,7 @@ def _pollard_rho(n: int) -> int:
             return d
 
 
-def _factorize(n: int, factors: list[int]) -> None:
+def _factorize(n, factors):
     if n == 1:
         return
     if _is_prime(n):
@@ -71,15 +69,15 @@ def _factorize(n: int, factors: list[int]) -> None:
     _factorize(n // divisor, factors)
 
 
-def to_prime(n: int) -> list[list[int]]:
+def to_prime(n):
     if n < 1:
         return []
 
-    factors: list[int] = []
+    factors = []
     _factorize(n, factors)
     factors.sort()
 
-    out: list[list[int]] = []
+    out = []
     for factor in factors:
         if out and out[-1][0] == factor:
             out[-1][1] += 1

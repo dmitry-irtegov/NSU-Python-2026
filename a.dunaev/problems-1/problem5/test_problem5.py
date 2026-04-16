@@ -4,19 +4,19 @@ import problem5
 
 
 class Problem5Tests(unittest.TestCase):
-    def test_zero_returns_empty_list(self) -> None:
+    def test_zero_returns_empty_list(self):
         self.assertEqual(problem5.to_prime(0), [])
 
-    def test_one_returns_empty_list(self) -> None:
+    def test_one_returns_empty_list(self):
         self.assertEqual(problem5.to_prime(1), [])
 
-    def test_factorization_of_composite_number(self) -> None:
+    def test_factorization_of_composite_number(self):
         self.assertEqual(problem5.to_prime(60), [[2, 2], [3, 1], [5, 1]])
 
-    def test_factorization_of_prime_power(self) -> None:
+    def test_factorization_of_prime_power(self):
         self.assertEqual(problem5.to_prime(1024), [[2, 10]])
 
-    def test_large_number_does_not_overflow_and_reconstructs_source(self) -> None:
+    def test_large_number_does_not_overflow_and_reconstructs_source(self):
         num = 321413252345246436413513513254
 
         factors = problem5.to_prime(num)
