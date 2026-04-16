@@ -1,5 +1,5 @@
+from cProfile import Profile
 from sys import stderr, argv
-from time import time
 from enum import Enum
 from re import sub
 class Replacement(Enum):
@@ -60,48 +60,45 @@ def compare_replaces():
                 data_list = str(data)
                 data_regexp = str(data)
                 
+                pr = Profile()
+                
                 print("\n\n---PROFILING REGEXP ---\n\n")
                 
-                start = time()
+                pr.enable()
                 data_regexp = sub(r'\D', '', data_regexp)
-                end = time()
+                pr.disable()
 
-                replace_time = end - start
+                pr.print_stats()                
 
-                print("RegexpReplace time = ", replace_time)
-                
+                pr = Profile()
                 print("\n\n---PROFILING FILTER ---\n\n")
-                start = time()
+
+                pr.enable()
                 data_filter = ''.join(filter(str.isdigit, data_filter))
-                end = time()
+                pr.disable()
 
-                replace_time = end - start
+                pr.print_stats()
 
-                print("Filter time = ", replace_time)
 
-            
+                pr = Profile()
+
                 print("\n\n---PROFILING REPLACE ---\n\n")
 
-                start = time()
+                pr.enable()
                 data_replace = data_replace.replace('\n', '')
-                end = time()
+                pr.disable()
                 
-                replace_time = end - start
-
-                print("Replace time = ", replace_time)
+                pr.print_stats()
 
 
+                pr = Profile()
                 print("\n\n---PROFILING LIST ---\n\n")
-                start = time()
+
+                pr.enable()
                 data_list = ''.join([x for x in data_list if x.isdigit()])
-                end = time()
+                pr.disable()
                 
-                replace_time = end - start
-
-                print("List time = ", replace_time)
-                
-
-                
+                pr.print_stats()       
             
     except OSError as err:
         print("Cannot open file ", err, file=stderr)
