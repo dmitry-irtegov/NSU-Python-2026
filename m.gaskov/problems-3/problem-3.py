@@ -8,16 +8,10 @@ class Vector:
         self._coordinates: tuple[float, ...] = tuple(coordinates)
 
     def __add__(self, other: Self) -> Self:
-        return Vector([
-            self._coordinates[i] + other._coordinates[i]
-            for i in range(len(self._coordinates))
-        ])
+        return Vector([a + b for a, b in zip(self._coordinates, other._coordinates)])
 
     def __sub__(self, other: Self) -> Self:
-        return Vector([
-            self._coordinates[i] - other._coordinates[i]
-            for i in range(len(self._coordinates))
-        ])
+        return Vector([a - b for a, b in zip(self._coordinates, other._coordinates)])
 
     def __mul__(self, scalar: float) -> Self:
         return Vector([x * scalar for x in self._coordinates])
@@ -26,10 +20,7 @@ class Vector:
         return self.__mul__(scalar)
 
     def dot(self, other: Self) -> float:
-        result = 0.0
-        for i in range(len(self._coordinates)):
-            result += self._coordinates[i] * other._coordinates[i]
-        return result
+        return sum([a * b for a, b in zip(self._coordinates, other._coordinates)])
 
     def length(self) -> float:
         return math.sqrt(self.dot(self))
