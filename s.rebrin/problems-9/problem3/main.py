@@ -1,7 +1,6 @@
 class Directory:
     def __getattribute__(self, name):
         attr = object.__getattribute__(self, name)
-        print(name)
 
         if callable(attr) and not name.startswith("__"):
 
