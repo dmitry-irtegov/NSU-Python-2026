@@ -1,8 +1,4 @@
-import importlib.util
-import pathlib
 import unittest
-
-
 import problem3
 
 
