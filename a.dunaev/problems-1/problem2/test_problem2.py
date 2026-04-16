@@ -4,11 +4,7 @@ import random
 import unittest
 
 
-MODULE_PATH = pathlib.Path(__file__).with_name("problem2.py")
-SPEC = importlib.util.spec_from_file_location("problem2", MODULE_PATH)
-problem2 = importlib.util.module_from_spec(SPEC)
-assert SPEC.loader is not None
-SPEC.loader.exec_module(problem2)
+import problem2
 
 
 class LimitTests(unittest.TestCase):
