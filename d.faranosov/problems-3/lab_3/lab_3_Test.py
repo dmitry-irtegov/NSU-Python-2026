@@ -79,20 +79,20 @@ class MyTestCase(unittest.TestCase):
     def test_dot_product_float_vectors(self):
         v1 = Vector([1.5, 2.3, 3.7])
         v2 = Vector([4.1, 5.9, 6.2])
-        result = v1 * v2
+        result = v1 @ v2
         expected = 1.5 * 4.1 + 2.3 * 5.9 + 3.7 * 6.2
         self.assertAlmostEqual(result, expected)
 
     def test_dot_product_commutative(self):
         v1 = Vector([1, 2, 3])
         v2 = Vector([4, 5, 6])
-        self.assertEqual(v1 * v2, v2 * v1)
+        self.assertEqual(v1 @ v2, v2 @ v1)
 
     def test_dot_product_different_sizes_raises_error(self):
         v1 = Vector([1, 2, 3])
         v2 = Vector([4, 5, 6, 7])
         with self.assertRaises(ValueError) as context:
-            v1 * v2
+            v1 @ v2
         self.assertEqual(str(context.exception), "mul vectors with different sizes")
 
     def test_scalar_multiplication_float(self):
@@ -110,7 +110,7 @@ class MyTestCase(unittest.TestCase):
         v1 = Vector(list(range(1000)))
         v2 = Vector(list(range(1000, 2000)))
         expected = sum(i * (i + 1000) for i in range(1000))
-        result = v1 * v2
+        result = v1 @ v2
         self.assertEqual(result, expected)
 
     def test_scalar_multiplication_large_vector(self):

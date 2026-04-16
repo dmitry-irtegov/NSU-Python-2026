@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Union, Iterable, Tuple
+from typing import Iterable, Tuple
 
 
 class Vector:
@@ -30,6 +30,8 @@ class Vector:
 
         return Vector([x + y for (x, y) in zip(self.elements, other.elements)])
 
+    def __radd__(self, other: Vector) -> Vector:
+        return other + self
 
     def __sub__(self, other: Vector) -> Vector:
         if other.size != self.size:
@@ -37,17 +39,18 @@ class Vector:
 
         return Vector([x - y for (x, y) in zip(self.elements, other.elements)])
 
+    def __matmul__(self, other: Vector) -> float:
+        if other.size != self.size:
+            raise ValueError("mul vectors with different sizes")
 
-    def __mul__(self, other: Union[Vector, float]) -> Union[Vector, float]:
-        if isinstance(other, Vector):
-            if other.size != self.size:
-                raise ValueError("mul vectors with different sizes")
-
-            return sum([x*y for (x, y) in zip(self.elements, other.elements)])
-        elif isinstance(other, float):
-            return Vector([x * other for x in self.elements])
+        return sum([x * y for (x, y) in zip(self.elements, other.elements)])
 
 
+    def __mul__(self, other: float) -> Vector:
+        return Vector([x * other for x in self.elements])
+
+    def __rmul__(self, other: float):
+        return other * self
 
     def __eq__(self, other) -> bool:
         if isinstance(other, Vector):
