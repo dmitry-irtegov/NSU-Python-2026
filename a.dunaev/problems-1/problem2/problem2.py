@@ -1,5 +1,5 @@
 #!/usr/bin/python
-def limit(inp: list, a: int, b: int) -> list:
+def limit(inp, a, b):
     return list(map(lambda x: a if x < a else (b if x > b else x), inp))
 
 if __name__ == '__main__':
