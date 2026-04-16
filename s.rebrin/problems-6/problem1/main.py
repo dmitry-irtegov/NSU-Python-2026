@@ -38,14 +38,20 @@ def main() -> None:
     else:
         mode = "random"
 
-    for line in sys.stdin:
-        line = line.rstrip("\n")
+    try:
+        for line in sys.stdin:
+            line = line.rstrip("\n")
 
-        if line == "":
-            continue
+            if line == "":
+                continue
 
-        res = randomize_words(line, 42, mode=mode)
-        print(res)
+            res = randomize_words(line, 42, mode=mode)
+            print(res)
+    except KeyboardInterrupt:
+        print("\nInterrupted")
+    except Exception as e:
+        print(f"Unexpected error: {e}", file=sys.stderr)
+        raise
 
 
 if __name__ == "__main__":
