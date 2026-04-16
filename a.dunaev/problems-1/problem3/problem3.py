@@ -1,6 +1,5 @@
 #!/usr/bin/python
-
-def collatz(inp: int) -> list[int]:
+def collatz(inp):
     if inp < 1:
         raise ValueError("inp must be positive")
 
@@ -12,11 +11,10 @@ def collatz(inp: int) -> list[int]:
     return result
 
 
-def format_seq(inp: int) -> str:
+def format_seq(inp):
     return " -> ".join(map(str, collatz(inp)))
 
-
-def main() -> None:
+def main():
     print(format_seq(7))
 
 
