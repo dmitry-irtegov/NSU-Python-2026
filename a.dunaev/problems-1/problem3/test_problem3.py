@@ -3,11 +3,7 @@ import pathlib
 import unittest
 
 
-MODULE_PATH = pathlib.Path(__file__).with_name("problem3.py")
-SPEC = importlib.util.spec_from_file_location("problem3", MODULE_PATH)
-problem3 = importlib.util.module_from_spec(SPEC)
-assert SPEC.loader is not None
-SPEC.loader.exec_module(problem3)
+import problem3
 
 
 class Problem3Tests(unittest.TestCase):
