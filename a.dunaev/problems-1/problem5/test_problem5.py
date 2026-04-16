@@ -1,14 +1,6 @@
-import importlib.util
 import math
-import pathlib
 import unittest
-
-
-MODULE_PATH = pathlib.Path(__file__).with_name("problem5.py")
-SPEC = importlib.util.spec_from_file_location("problem5", MODULE_PATH)
-problem5 = importlib.util.module_from_spec(SPEC)
-assert SPEC.loader is not None
-SPEC.loader.exec_module(problem5)
+import problem5
 
 
 class Problem5Tests(unittest.TestCase):
