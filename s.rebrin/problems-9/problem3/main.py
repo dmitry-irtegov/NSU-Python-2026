@@ -1,6 +1,7 @@
 class Directory:
     def __getattribute__(self, name):
         attr = object.__getattribute__(self, name)
+        print(name)
 
         if callable(attr) and not name.startswith("__"):
 
@@ -23,10 +24,5 @@ class Directory:
         return attr
 
     def __str__(self):
-        d = self.__dict__
+        d = object.__getattribute__(self, "__dict__")
         return str(d.get("m", {}))
-
-
-d = Directory()
-d.__str__()
-print(str(d))
