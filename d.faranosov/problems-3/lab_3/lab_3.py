@@ -49,16 +49,16 @@ class Vector:
     def __mul__(self, other: float) -> Vector:
         return Vector([x * other for x in self.elements])
 
-    def __rmul__(self, other: float):
+    def __rmul__(self, other: float ):
         return other * self
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, Vector):
-            is_size_eq =  self.size == other.size
+            is_size_eq: bool =  self.size == other.size
             if not is_size_eq:
                 return False
             for i, elem in enumerate(self.elements):
-                is_eq = abs(elem - other.elements[i]) < 0.1**6
+                is_eq: bool = abs(elem - other.elements[i]) < 0.1**6
                 if not is_eq:
                     return False
             return True
