@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import unittest
+from os import path, remove
 from tempfile import NamedTemporaryFile
 
 from main import make_latin_dict
@@ -8,10 +9,12 @@ from main import make_latin_dict
 
 class TestCumulativeSums(unittest.TestCase):
     def setUp(self):
-        self.temp_file = NamedTemporaryFile()
+        self.temp_file = NamedTemporaryFile(delete=False)
+        self.temp_file.close()
 
     def tearDown(self):
-        self.temp_file.close()
+        if path.exists(self.temp_file.name):
+            remove(self.temp_file.name)
 
     def write_dict_to_file(self, content):
         with open(self.temp_file.name, 'w') as f:
