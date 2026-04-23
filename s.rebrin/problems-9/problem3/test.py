@@ -17,7 +17,7 @@ class TestDirectory(unittest.TestCase):
 
         self.assertEqual(res, 10)
 
-        log = a.__dict__["m"]
+        log = a.__dict__["_Directory__log"]
         self.assertIn("foo", log)
         self.assertEqual(log["foo"]["count"], 1)
         self.assertEqual(log["foo"]["calls"][0]["args"], (5,))
@@ -33,7 +33,7 @@ class TestDirectory(unittest.TestCase):
         a.foo(2)
         a.foo(3)
 
-        log = a.__dict__["m"]
+        log = a.__dict__["_Directory__log"]
         self.assertEqual(log["foo"]["count"], 3)
 
         args_list = [call["args"][0] for call in log["foo"]["calls"]]
@@ -47,7 +47,7 @@ class TestDirectory(unittest.TestCase):
         a = A()
         a.foo(x=10)
 
-        log = a.__dict__["m"]
+        log = a.__dict__["_Directory__log"]
         self.assertEqual(log["foo"]["calls"][0]["kwargs"], {"x": 10})
 
     def test_multiple_methods(self):
@@ -62,7 +62,7 @@ class TestDirectory(unittest.TestCase):
         a.foo()
         a.bar()
 
-        log = a.__dict__["m"]
+        log = a.__dict__["_Directory__log"]
         self.assertIn("foo", log)
         self.assertIn("bar", log)
 
@@ -76,7 +76,7 @@ class TestDirectory(unittest.TestCase):
 
         self.assertEqual(result, 5)
 
-        log = a.__dict__["m"]
+        log = a.__dict__["_Directory__log"]
         self.assertEqual(log["add"]["count"], 1)
 
     def test_str_output(self):
@@ -98,6 +98,28 @@ class TestDirectory(unittest.TestCase):
 
         a = A()
         self.assertEqual(a.x, 10)
+
+    def test_child_class_separate_log(self):
+        class A(Directory):
+            def __init__(self):
+                self.__log = "test"
+
+            def foo(self):
+                return "A"
+
+        a = A()
+
+        a.foo()
+
+        self.assertIn("_A__log", a.__dict__)
+
+        self.assertIn("_Directory__log", a.__dict__)
+
+        log_d = a.__dict__["_Directory__log"]
+        log_a = a.__dict__["_A__log"]
+
+        self.assertEqual(log_d["foo"]["count"], 1)
+        self.assertEqual(log_a, "test")
 
 
 if __name__ == "__main__":
