@@ -7,14 +7,16 @@ class Directory:
             def wrapper(*args, **kwargs):
                 d = object.__getattribute__(self, "__dict__")
 
-                if "m" not in d:
-                    d["m"] = {}
+                name_log = "_Directory__log"
 
-                if name not in d["m"]:
-                    d["m"][name] = {"count": 0, "calls": []}
+                if name_log not in d:
+                    d[name_log] = {}
 
-                d["m"][name]["count"] += 1
-                d["m"][name]["calls"].append({"args": args, "kwargs": kwargs})
+                if name not in d[name_log]:
+                    d[name_log][name] = {"count": 0, "calls": []}
+
+                d[name_log][name]["count"] += 1
+                d[name_log][name]["calls"].append({"args": args, "kwargs": kwargs})
 
                 return attr(*args, **kwargs)
 
@@ -24,4 +26,4 @@ class Directory:
 
     def __str__(self):
         d = object.__getattribute__(self, "__dict__")
-        return str(d.get("m", {}))
+        return str(d.get("_Directory__log", {}))
