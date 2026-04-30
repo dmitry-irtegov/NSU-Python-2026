@@ -7,7 +7,7 @@ class Vector:
     size: int
     elements: Tuple[float, ...]
 
-    def __init__(self, elements: Iterable[float]):
+    def __init__(self, elements: Iterable[float]) -> None:
         self.elements = tuple(elements)
         self.size = len(self.elements)
 
