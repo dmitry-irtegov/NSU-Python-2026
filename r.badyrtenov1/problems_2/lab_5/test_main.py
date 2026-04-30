@@ -28,7 +28,7 @@ def is_prime(n):
     return True
 
 
-class TestCumulativeSums(unittest.TestCase):
+class TestPrimes(unittest.TestCase):
     def test_zero(self):
         self.assertEqual(primes(0), [])
 
