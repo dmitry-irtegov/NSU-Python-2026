@@ -1,6 +1,6 @@
 from sys import stderr, argv
 
-def find_search(text: str, pattern: str):
+def find_search(text: str, pattern: str) -> list[int]:
     indexes = []
     start = 0
     while 1:
@@ -12,7 +12,7 @@ def find_search(text: str, pattern: str):
     return indexes
 
 
-def result_line(found_indexes):
+def result_line(found_indexes: list[int])->str:
     length = len(found_indexes)
     found_indexes = found_indexes if length < 5 else found_indexes[:5]
     result = f"Found {length} results."
@@ -27,7 +27,7 @@ def result_line(found_indexes):
     )
     return result
 
-def main(pattern):
+def main(pattern: str):
     try:
         with open("pi.txt", "r", encoding="utf-8") as file:
             file.read(2)
