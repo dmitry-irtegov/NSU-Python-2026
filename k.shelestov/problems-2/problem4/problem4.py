@@ -1,5 +1,5 @@
 import sys
-
+import os
 
 def find_positions(data, pattern):
     positions = []
@@ -17,7 +17,10 @@ def find_positions(data, pattern):
 
 def main():
     try:
-        with open("pi.txt", "r", encoding="utf-8") as file:
+        base_dir = os.path.dirname(__file__)
+        file_path = os.path.join(base_dir, "pi.txt")
+        
+        with open(file_path, "r", encoding="utf-8") as file:
             file.read(2)
             text = file.read()
             text = text.replace("\n", "")
