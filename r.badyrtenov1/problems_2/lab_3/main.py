@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
 from os import listdir, stat
-from os.path import isfile, join
-from sys import stderr, argv
+from os.path import isfile, join, isdir
+from sys import stderr, argv, exit
 
 
 def get_sorted_files(directory_path):
@@ -16,10 +16,14 @@ def get_sorted_files(directory_path):
 
 if __name__ == "__main__":
     try:
+        if len(argv) < 2 or not isdir(argv[1]):
+            print(f"Usage: {argv[0]} <directory_path>")
+            exit(1)
+
         result = get_sorted_files(argv[1])
         for name, size in result:
             print(f"{name} - {size}")
     except KeyboardInterrupt:
-        print("Shutting down...")
+        print("Shutting down...", file=stderr)
     except Exception as e:
         print(f"Exception in main(): {e}", file=stderr)
