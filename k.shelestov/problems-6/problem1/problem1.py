@@ -53,10 +53,14 @@ def main():
     rng = random.Random(args.seed)
 
     try:
-        for line in sys.stdin:
-            if line.strip():
-                print(process_text(line.rstrip("\n"), args.mode, rng))
+        while True:
+            line = input()
 
+            if line.strip():
+                print(process_text(line, args.mode, rng))
+
+    except EOFError:
+        print("\nEnd of input")
     except KeyboardInterrupt:
         print("\nInterrupted")
     except Exception as e:
