@@ -1,14 +1,10 @@
 from collections.abc import Iterable
 from typing import Self
 
-TableValue = object
 
-
-class Table:
-    def __init__(self, rows: Iterable[Iterable[TableValue]]) -> None:
-        self._rows: tuple[tuple[TableValue, ...], ...] = tuple(
-            tuple(row) for row in rows
-        )
+class Table[T]:
+    def __init__(self, rows: Iterable[Iterable[T]]) -> None:
+        self._rows: tuple[tuple[T, ...], ...] = tuple(tuple(row) for row in rows)
 
     def head(self, count: int) -> Self:
         return type(self)(self._rows[:count])
@@ -34,7 +30,7 @@ class Table:
         )
 
     def slice(self, column_indices: Iterable[int]) -> Self:
-        selected_columns = tuple(column_indices)
+        selected_columns: tuple[int, ...] = tuple(column_indices)
 
         return type(self)(
             (
@@ -49,7 +45,7 @@ class Table:
 
         return self._rows == other._rows
 
-    def __getitem__(self, index: int) -> tuple[TableValue, ...]:
+    def __getitem__(self, index: int) -> tuple[T, ...]:
         return self._rows[index]
 
     def __len__(self) -> int:
