@@ -1,7 +1,7 @@
 from sortedDict import SortedDict
 
 if __name__ == "__main__":
-    sd = SortedDict[int, int]()
+    sd : SortedDict[int, int] = SortedDict[int, int]()
 
     print("Commands:")
     print("  insert <key> <value>")
@@ -15,10 +15,12 @@ if __name__ == "__main__":
 
     while True:
         try:
-            line = input("> ").strip().split()
+            k : int = 0
+            v : int = 0
+            line : list[str] = input("> ").strip().split()
             if not line:
                 continue
-            cmd = line[0].lower()
+            cmd : str = line[0].lower()
 
             if cmd == "quit":
                 break
@@ -38,7 +40,7 @@ if __name__ == "__main__":
                     continue
                 k = int(line[1])
                 try:
-                    val = sd[k]
+                    val : int = sd[k]
                     print(f"Значение: {k}: {val}")
                 except KeyError:
                     print(f"Ключ {k} не найден.")
@@ -62,11 +64,11 @@ if __name__ == "__main__":
                 print(k in sd)
 
             elif cmd == "keys":
-                keys = list(sd)
+                keys : list[int] = list(sd)
                 print("Ключи:", keys)
 
             elif cmd == "items":
-                items = list(sd.items())
+                items : list[tuple[int, int]]= list(sd.items())
                 print("Пары:", items)
 
             else:

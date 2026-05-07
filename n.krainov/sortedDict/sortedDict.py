@@ -31,7 +31,7 @@ class SortedDictNode(Generic[K, T]):
 
 
 class SortedDict(Generic[K, T]):
-    def __init__(self) -> None:
+    def __init__(self, seq : Optional[list[tuple[K, T]]] = None) -> None:
         self._noneNode : SortedDictNode[K, T] = SortedDictNode[K, T]()
         self._noneNode.color = Color.BLACK
         self._noneNode.leftChild = self._noneNode
@@ -39,6 +39,10 @@ class SortedDict(Generic[K, T]):
         self._noneNode.parent = self._noneNode
 
         self._root : SortedDictNode[K, T] = self._noneNode
+
+        if seq is not None:
+            for pair in seq:
+                self[pair[0]] = pair[1]
 
 
     def __getitem__(self, key: K) -> T:
@@ -69,8 +73,26 @@ class SortedDict(Generic[K, T]):
 
         return None
 
+    def _findNodeWithParent(self, key: K) -> tuple[Optional[SortedDictNode[K, T]], SortedDictNode[K, T]]:
+        parent: SortedDictNode[K, T] = self._noneNode
+        node: SortedDictNode[K, T] = self._root
+        while node != self._noneNode:
+            assert node.key is not None
+            if node.key == key:
+                return node, parent
+            parent = node
+            if node.key < key:
+                assert node.rightChild is not None
+                node = node.rightChild
+            else:
+                assert node.leftChild is not None
+                node = node.leftChild
+        return None, parent
+
     def __setitem__(self, key: K, value: T) -> None:
-        existedNode : Optional[SortedDictNode[K, T]] = self._findNode(key)
+        existedNode: Optional[SortedDictNode[K, T]]
+        parent: SortedDictNode[K, T]
+        existedNode, parent = self._findNodeWithParent(key)
         if existedNode is not None:
             existedNode.value = value
             return
@@ -82,19 +104,6 @@ class SortedDict(Generic[K, T]):
 
         assert newNode.key is not None
 
-        parent : SortedDictNode[K, T] = self._noneNode
-        node : SortedDictNode[K, T] = self._root
-        while node != self._noneNode:
-            assert node.key is not None
-
-            parent = node
-            if newNode.key < node.key:
-                assert node.leftChild is not None
-                node = node.leftChild
-            else:
-                assert node.rightChild is not None
-                node = node.rightChild
-
         newNode.parent = parent
         if parent == self._noneNode:
             self._root = newNode
@@ -103,10 +112,10 @@ class SortedDict(Generic[K, T]):
         else:
             parent.rightChild = newNode
 
-        self._insertFixup(newNode)
+        self._insertRebalance(newNode)
 
 
-    def _insertFixup(self, newNode: SortedDictNode[K, T]) -> None:
+    def _insertRebalance(self, newNode: SortedDictNode[K, T]) -> None:
         node : SortedDictNode[K, T] = newNode
         uncle: SortedDictNode[K, T] = node
 
@@ -262,7 +271,7 @@ class SortedDict(Generic[K, T]):
             delNode.color = node.color
 
         if originalColor == Color.BLACK:
-            self._deleteFixup(nodeForFixup, fixupParent)
+            self._deleteRebalance(nodeForFixup, fixupParent)
 
 
     def _replaceNodes(self, u : SortedDictNode[K, T], v : SortedDictNode[K, T]) -> None:
@@ -289,7 +298,7 @@ class SortedDict(Generic[K, T]):
 
         return node
 
-    def _deleteFixup(self, nodeForFixup : SortedDictNode[K, T], parent : SortedDictNode[K, T]) -> None:
+    def _deleteRebalance(self, nodeForFixup : SortedDictNode[K, T], parent : SortedDictNode[K, T]) -> None:
         brother: SortedDictNode[K, T] = nodeForFixup
         while nodeForFixup != self._root and nodeForFixup.color == Color.BLACK:
             assert parent is not None
