@@ -2,7 +2,7 @@
 
 from os import listdir, stat
 from os.path import isfile, join, isdir
-from sys import stderr, argv, exit
+from sys import stderr, argv
 
 
 def get_sorted_files(directory_path):
@@ -17,12 +17,11 @@ def get_sorted_files(directory_path):
 if __name__ == "__main__":
     try:
         if len(argv) < 2 or not isdir(argv[1]):
-            print(f"Usage: {argv[0]} <directory_path>")
-            exit(1)
-
-        result = get_sorted_files(argv[1])
-        for name, size in result:
-            print(f"{name} - {size}")
+            print(f"Usage: python {argv[0]} <directory_path>")
+        else:
+            result = get_sorted_files(argv[1])
+            for name, size in result:
+                print(f"{name} - {size}")
     except KeyboardInterrupt:
         print("Shutting down...", file=stderr)
     except Exception as e:
