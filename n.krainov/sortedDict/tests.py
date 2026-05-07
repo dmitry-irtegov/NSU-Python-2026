@@ -121,10 +121,10 @@ class TestSortedDict(unittest.TestCase):
         self._assert_red_black_properties()
 
     def test_init_from_dict(self) -> None:
-        l : list[tuple[int, int]] = [(1, 1), (2, 2), (3, 3), (4, 4), (-1, -1), (-2, -2), (-3, -3)]
-        sorted_dict : SortedDict[int, int] = SortedDict(l)
-        l.sort(key=lambda x: x[0])
-        self.assertEqual(list(sorted_dict.items()), l)
+        tupleList : list[tuple[int, int]] = [(1, 1), (2, 2), (3, 3), (4, 4), (-1, -1), (-2, -2), (-3, -3)]
+        sorted_dict : SortedDict[int, int] = SortedDict(tupleList)
+        tupleList.sort(key=lambda x: x[0])
+        self.assertEqual(list(sorted_dict.items()), tupleList)
 
 if __name__ == "__main__":
     unittest.main()

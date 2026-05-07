@@ -2,7 +2,6 @@ import time
 import random
 import math
 import matplotlib.pyplot as plt
-import matplotlib
 from typing import Callable, Any
 from sortedDict import SortedDict
 
