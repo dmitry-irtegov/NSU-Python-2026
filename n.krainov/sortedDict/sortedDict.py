@@ -29,9 +29,16 @@ class SortedDictNode(Generic[K, T]):
         self.leftChild : Optional[SortedDictNode[K, T]] = None
         self.parent : Optional[SortedDictNode[K, T]] = None
 
+        self._counter : int = 0
+
+    def increment(self):
+        self._counter += 1
 
 class SortedDict(Generic[K, T]):
     def __init__(self, seq : Optional[list[tuple[K, T]]] = None) -> None:
+        self._counterInsertRebalance : int = 0
+        self._counterDeleteRebalance : int = 0
+
         self._noneNode : SortedDictNode[K, T] = SortedDictNode[K, T]()
         self._noneNode.color = Color.BLACK
         self._noneNode.leftChild = self._noneNode
@@ -61,6 +68,8 @@ class SortedDict(Generic[K, T]):
             # Только noneNode имеет ключ и значение None
             assert node.key is not None
 
+            node.increment()
+
             if node.key == key:
                 return node
 
@@ -78,6 +87,9 @@ class SortedDict(Generic[K, T]):
         node: SortedDictNode[K, T] = self._root
         while node != self._noneNode:
             assert node.key is not None
+
+            node.increment()
+
             if node.key == key:
                 return node, parent
             parent = node
@@ -119,8 +131,13 @@ class SortedDict(Generic[K, T]):
         node : SortedDictNode[K, T] = newNode
         uncle: SortedDictNode[K, T] = node
 
+        flag : bool = True
         assert node.parent is not None
         while node.parent.color == Color.RED:
+            if flag:
+                flag = False
+                self._counterInsertRebalance += 1
+
             assert node.parent is not None
             assert node.parent.parent is not None
             assert node.parent.parent.rightChild is not None
@@ -271,6 +288,7 @@ class SortedDict(Generic[K, T]):
             delNode.color = node.color
 
         if originalColor == Color.BLACK:
+            self._counterDeleteRebalance += 1
             self._deleteRebalance(nodeForFixup, fixupParent)
 
 
