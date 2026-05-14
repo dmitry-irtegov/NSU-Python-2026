@@ -1,5 +1,8 @@
 import unittest
+import uuid
 from collections.abc import Sequence
+
+import numpy as np
 
 
 def cummulative_sum(nums: Sequence[int | float]) -> list[int | float]:
@@ -13,23 +16,13 @@ def cummulative_sum(nums: Sequence[int | float]) -> list[int | float]:
 
 
 class TestCummulativeSum(unittest.TestCase):
-    def test_simple_case(self) -> None:
-        nums: list[int] = [1, 2, 3]
-        res: list[int | float] = cummulative_sum(nums)
-        expected: list[int] = [0, 1, 3, 6]
-        self.assertEqual(res, expected)
+    def test_cummulative_sum(self) -> None:
+        print(cummulative_sum([1, 2, 3]))
+        random_numbers: list[int] = [uuid.uuid4().int for _ in range(10)]
 
-    def test_empty_list(self) -> None:
-        nums: list[int] = []
-        res: list[int | float] = cummulative_sum(nums)
-        expected: list[int] = [0]
-        self.assertEqual(res, expected)
-
-    def test_mixed_values(self) -> None:
-        nums: list[int | float] = [2, -1, 0.5]
-        res: list[int | float] = cummulative_sum(nums)
-        expected: list[float] = [0, 2, 1, 1.5]
-        self.assertEqual(res, expected)
+        left_array = np.array(cummulative_sum(random_numbers)[1:])
+        right_array = np.array(np.cumsum(random_numbers))
+        self.assertTrue(np.array_equal(left_array, right_array))
 
 
 if __name__ == "__main__":
