@@ -58,4 +58,4 @@ def run_collatz_from_cli() -> None:
 
 
 if __name__ == "__main__":
-    run_collatz_from_cli()
+    unittest.main()
