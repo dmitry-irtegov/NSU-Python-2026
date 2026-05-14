@@ -51,3 +51,7 @@ class TestClampArrayToBounds(unittest.TestCase):
         clamp_array_to_bounds(original_list, 1, 5)
         expected: list[int | float] = [1, 2, 3, 4, 5]
         self.assertEqual(original_list, expected)
+
+
+if __name__ == "__main__":
+    unittest.main()
