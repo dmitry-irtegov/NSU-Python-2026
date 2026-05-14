@@ -1,15 +1,24 @@
 from collections.abc import Iterable, Iterator
+from typing import Any, Protocol
 
-OrderedNumber = int | float
+
+class OrderedValue(Protocol):
+    def __lt__(self, other: Any, /) -> bool: ...
+
+    def __le__(self, other: Any, /) -> bool: ...
+
+    def __gt__(self, other: Any, /) -> bool: ...
+
+    def __ge__(self, other: Any, /) -> bool: ...
 
 
-def clip_numbers(
-    numbers: Iterable[OrderedNumber],
-    lower: OrderedNumber,
-    upper: OrderedNumber,
-) -> Iterator[OrderedNumber]:
+def clip_values[ValueT: OrderedValue](
+    values: Iterable[ValueT],
+    lower: ValueT,
+    upper: ValueT,
+) -> Iterator[ValueT]:
     if upper < lower:
         message: str = f"upper boundary {upper} is less than lower boundary {lower}"
         raise ValueError(message)
 
-    return (min(max(number, lower), upper) for number in numbers)
+    return (min(max(value, lower), upper) for value in values)
